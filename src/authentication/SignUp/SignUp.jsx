@@ -1,23 +1,60 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import register_lottie from '../../assets/lottie/register.json';
 import { useForm } from "react-hook-form"
 import Lottie from 'lottie-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import GoogleSignIn from '../../components/GoogleSignIn/GoogleSignIn';
 import { PencilSquareIcon, EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
+import useAuth from '../../hooks/useAuth';
 
 const SignUp = () => {
     const [errMsg, setErrMsg] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [passwordErrMsg, setPasswordErrMsg] = useState('');
+
+    const { createUser, updateUserProfile } = useAuth();
+    const navigate = useNavigate();
+
+
     const passwordRegEx = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
-    const { register, handleSubmit, watch, formState: { errors }, } = useForm()
+    const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm()
 
     const onSubmit = (data) => {
         setErrMsg('');
 
+        // validate password
+        if(!passwordRegEx.test(data.password)){
+            return setPasswordErrMsg('Password should be uppercase, lowercase, digits & 6 chars')
+        }
+
+        // createUser
+        createUser(data.email, data.password)
+        .then(result => {
+            const user = result.user;
+            updateUserProfileHandler(user, data.fullname);
+            navigate('/');
+            reset();
+            console.log("Sign up new user:", user);
+        })
+        .catch(err => {
+            console.error('Sign up error:', err);
+            setErrMsg(err?.message);
+        })
+
         console.log(data);
+    }
+
+    // updateUserProfileHandler
+    const updateUserProfileHandler = (user, fullname) => {
+        updateUserProfile(user, fullname)
+        .then(() => {
+            console.log('Profile updated successfully');
+        })
+        .catch(err => {
+            console.error("Update profile error:", err);
+            setErrMsg(err?.message);
+        })
     }
 
     return (

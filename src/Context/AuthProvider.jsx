@@ -22,11 +22,10 @@ const AuthProvider = ({ children }) => {
     };
 
     // updateUserProfile
-    const updateUserProfile = (user, fullname, image) => {
+    const updateUserProfile = (user, fullname) => {
         setLoading(true);
         return updateProfile(user, {
-            displayName: fullname,
-            photoURL: image
+            displayName: fullname
         });
     };
 
