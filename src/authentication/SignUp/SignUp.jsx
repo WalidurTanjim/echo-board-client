@@ -10,6 +10,7 @@ const SignUp = () => {
     const [errMsg, setErrMsg] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [passwordErrMsg, setPasswordErrMsg] = useState('');
+    const passwordRegEx = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
     const { register, handleSubmit, watch, formState: { errors }, } = useForm()
 
@@ -26,7 +27,7 @@ const SignUp = () => {
                 <div className="lottie-container">
                     <Lottie animationData={register_lottie} loop={true} className='h-[300px] md:h-[450px]' />
                 </div>
-                
+
                 {/* form-container div starts */}
                 <div className='form-container'>
                     <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
@@ -61,6 +62,9 @@ const SignUp = () => {
 
                         {/* error message */}
                         {errMsg ? <p className='text-sm text-red-600 ps-1 mt-3'>{errMsg}</p> : undefined}
+
+                        {/* password error message */}
+                        {passwordErrMsg ? <p className='text-sm text-red-600 ps-1 mt-3'>{passwordErrMsg}</p> : undefined}
 
                         {/* show & forget password div starts */}
                         <div className="flex items-center text-sm mt-4">
