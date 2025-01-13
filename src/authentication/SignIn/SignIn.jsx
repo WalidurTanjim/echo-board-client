@@ -1,21 +1,37 @@
 import Lottie from 'lottie-react';
 import React, { useState } from 'react';
 import sign_in_lottie from '../../assets/lottie/sign_in.json';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import GoogleSignIn from '../../components/GoogleSignIn/GoogleSignIn';
 import { useForm } from "react-hook-form";
 import { EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
+import useAuth from '../../hooks/useAuth';
 
 const SignIn = () => {
     const [errMsg, setErrMsg] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
-    const { register, handleSubmit, watch, formState: { errors }, } = useForm()
+    const { signInUser } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm()
 
     const onSubmit = (data) => {
         setErrMsg('');
 
-        console.log(data);
+        // signInUser
+        signInUser(data.email, data.password)
+        .then(result => {
+            const user = result.user;
+            navigate('/');
+            reset();
+            console.log("Sign in user:", user);
+        })
+        .catch(err => {
+            console.error(err);
+            setErrMsg(err?.message);
+        })
     }
 
     return (

@@ -41,8 +41,6 @@ const SignUp = () => {
             console.error('Sign up error:', err);
             setErrMsg(err?.message);
         })
-
-        console.log(data);
     }
 
     // updateUserProfileHandler
