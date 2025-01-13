@@ -18,6 +18,7 @@ const Navbar = () => {
         logOut()
         .then(() => {
             console.log('Logout user successfully');
+            setToggleLinks(false);
         })
         .catch(err => {
             console.error(err);
