@@ -30,6 +30,23 @@ const Post = ({ post, refetch }) => {
         }
     }
 
+    // handleIncreaseDownVote
+    const handleIncreaseDownVote = async (id) => {
+        if(!user){
+            return navigate('/sign-in', {state: { from: location }}, {replace: true});
+        }
+        try{
+            const res = await axiosSecure.patch(`/increase-downvote/${id}`);
+            const data = res?.data;
+
+            if(data.modifiedCount > 0){
+                refetch();
+            }
+        }catch(err){
+            console.error(err);
+        }
+    }
+
     return (
         <div className='post border rounded-lg p-2 mb-5'>
             {/* post title */}
@@ -61,7 +78,7 @@ const Post = ({ post, refetch }) => {
 
                     {/* downVote count */}
                     <div className='flex items-center cursor-default'>
-                        <ChevronDoubleDownIcon className="size-4 text-gray-400 hover:text-gray-600 active:text-gray-400" />
+                        <ChevronDoubleDownIcon className="size-4 text-gray-400 hover:text-gray-600 active:text-gray-400" onClick={() => handleIncreaseDownVote(_id)} />
                         <span className='text-xs text-gray-500'>{userPost?.downVoteIcon}</span>
                     </div>
                 </div>
