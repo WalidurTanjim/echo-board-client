@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
+import logo from '../../../assets/logo.png'
 
 const Navbar = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
@@ -28,7 +29,9 @@ const Navbar = () => {
     return (
         <header className="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-4 dark:bg-neutral-800 container mx-auto px-6 sticky top-0 z-50">
             <nav className="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
-                <Link className="sm:order-1 flex-none text-xl font-semibold dark:text-white focus:outline-none focus:opacity-80" to="/">EchoBoard</Link>
+                <Link className="sm:order-1 flex items-center text-xl font-semibold dark:text-white focus:outline-none focus:opacity-80" to="/">
+                <img src={logo} alt="" className='w-[22px] h-[22px] me-1' />
+                EchoBoard</Link>
 
                 <div className="sm:order-3 flex items-center gap-x-2">
                     <button

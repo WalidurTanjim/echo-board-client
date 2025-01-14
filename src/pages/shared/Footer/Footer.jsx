@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../../../assets/logo.png'
 
 const Footer = () => {
     return (
@@ -8,11 +9,8 @@ const Footer = () => {
                 {/* Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
                     <div className="col-span-full lg:col-span-1">
-                        <Link
-                            className="flex-none text-xl font-semibold text-white focus:outline-none focus:opacity-80"
-                            to="/"
-                            aria-label="Brand"
-                        >
+                        <Link className="flex items-center text-xl font-semibold text-white focus:outline-none focus:opacity-80" to="/" aria-label="Brand">
+                            <img src={logo} alt="" className='w-[22px] h-[22px] me-1' />
                             EchoBoard
                         </Link>
                     </div>
