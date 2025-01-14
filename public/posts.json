@@ -1,0 +1,112 @@
+[
+    {
+        "_id": "01",
+        "author": {
+            "image": "https://www.shutterstock.com/image-photo/doraemon-600nw-2426094143.jpg",
+            "name": "John Doe",
+            "email": "md.tanjim@gmail.com"
+        },
+        "post": {
+            "title": "How to Start Learning Web Development",
+            "description": "A comprehensive guide on how to begin your journey in web development. Tips, tools, and resources to get started.",
+            "tags": [
+                "Web Development",
+                "Career Advice",
+                "General Discussion"
+            ],
+            "postTime": "2025-01-14T10:00:00Z",
+            "commentButton": true,
+            "upVoteIcon": "9",
+            "downVoteIcon": "3",
+            "shareButton": true
+        }
+    },
+    {
+        "_id": "02",
+        "author": {
+            "image": "https://rukminim2.flixcart.com/image/850/1000/klicfww0/poster/i/p/7/medium-wall-decor-3d-psoter-for-doraemon-nobita-cartoon-funny-original-imagym48nrgmyrhx.jpeg?q=90&crop=false",
+            "name": "Alice Smith",
+            "email": "md.tanjim@gmail.com"
+        },
+        "post": {
+            "title": "Best Practices for Frontend Development",
+            "description": "Explore the best practices for frontend development, including code organization, responsiveness, and performance optimization.",
+            "tags": [
+                "Web Development",
+                "DIY & Crafts",
+                "Design"
+            ],
+            "postTime": "2025-01-13T14:30:00Z",
+            "commentButton": true,
+            "upVoteIcon": "9",
+            "downVoteIcon": "3",
+            "shareButton": true
+        }
+    },
+    {
+        "_id": "03",
+        "author": {
+            "image": "https://imgcdn.stablediffusionweb.com/2024/9/10/7e0373fb-5810-4dba-88dc-bc11bb83aa2f.jpg",
+            "name": "Robert Brown",
+            "email": "md.tanjim@gmail.com"
+        },
+        "post": {
+            "title": "The Future of Artificial Intelligence",
+            "description": "A discussion on how AI is shaping the future of technology, its applications, and ethical considerations.",
+            "tags": [
+                "Cybersecurity",
+                "Technology",
+                "General Discussion"
+            ],
+            "postTime": "2025-01-12T09:15:00Z",
+            "commentButton": true,
+            "upVoteIcon": "9",
+            "downVoteIcon": "3",
+            "shareButton": true
+        }
+    },
+    {
+        "_id": "04",
+        "author": {
+            "image": "https://wallpapers.com/images/featured/doraemon-6ag1ry72uy2s9jmg.jpg",
+            "name": "Emily Davis",
+            "email": "md.tanjim@gmail.com"
+        },
+        "post": {
+            "title": "Understanding React Hooks",
+            "description": "A deep dive into React Hooks, explaining their purpose, usage, and common patterns in modern React development.",
+            "tags": [
+                "Web Development",
+                "Bug Reports",
+                "React"
+            ],
+            "postTime": "2025-01-11T16:45:00Z",
+            "commentButton": true,
+            "upVoteIcon": "9",
+            "downVoteIcon": "3",
+            "shareButton": true
+        }
+    },
+    {
+        "_id": "05",
+        "author": {
+            "image": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/7085/1715414277085-i",
+            "name": "Michael Johnson",
+            "email": "md.tanjim@gmail.com"
+        },
+        "post": {
+            "title": "Exploring the World of Blockchain",
+            "description": "An introductory post about blockchain technology, its uses, and how it is transforming industries like finance and healthcare.",
+            "tags": [
+                "Blockchain",
+                "Finance",
+                "Technology"
+            ],
+            "postTime": "2025-01-10T18:00:00Z",
+            "commentButton": true,
+            "upVoteIcon": "9",
+            "downVoteIcon": "3",
+            "shareButton": true
+        }
+    }
+]
