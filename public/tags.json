@@ -1,0 +1,72 @@
+[
+    {
+        "_id": 1,
+        "tag_name": "General Discussion",
+        "tag_icon": "https://i.ibb.co.com/cQgxzbY/general-discussion.png"
+    },
+    {
+        "_id": 2,
+        "tag_name": "Web Development",
+        "tag_icon": "https://i.ibb.co.com/c83Ymnb/web-development.png"
+    },
+    {
+        "_id": 3,
+        "tag_name": "Health & Fitness",
+        "tag_icon": "https://i.ibb.co.com/6B57g4N/health-fitness.png"
+    },
+    {
+        "_id": 4,
+        "tag_name": "Travel",
+        "tag_icon": "https://i.ibb.co.com/Jm5G2YW/travel.png"
+    },
+    {
+        "_id": 5,
+        "tag_name": "Career Advice",
+        "tag_icon": "https://i.ibb.co.com/TwBwGhz/career.png"
+    },
+    {
+        "_id": 6,
+        "tag_name": "Movies",
+        "tag_icon": "https://i.ibb.co.com/T8PVDs2/movies.png"
+    },
+    {
+        "_id": 7,
+        "tag_name": "DIY & Crafts",
+        "tag_icon": "https://i.ibb.co.com/Mg1kbg9/craft.png"
+    },
+    {
+        "_id": 8,
+        "tag_name": "Cybersecurity",
+        "tag_icon": "https://i.ibb.co.com/8zfshw8/cybersecurity.png"
+    },
+    {
+        "_id": 9,
+        "tag_name": "Music",
+        "tag_icon": "https://i.ibb.co.com/vqRZxRv/music.png"
+    },
+    {
+        "_id": 10,
+        "tag_name": "Bug Reports",
+        "tag_icon": "https://i.ibb.co.com/vdS5fMH/bug-report.png"
+    },
+    {
+        "_id": 11,
+        "tag_name": "Parenting",
+        "tag_icon": "https://i.ibb.co.com/gRNw8LV/parenting.png"
+    },
+    {
+        "_id": 12,
+        "tag_name": "Photography",
+        "tag_icon": "https://i.ibb.co.com/tsZ0LwL/photography.png"
+    },
+    {
+        "_id": 13,
+        "tag_name": "Sports",
+        "tag_icon": "https://i.ibb.co.com/NT0mxfH/sports.png"
+    },
+    {
+        "_id": 14,
+        "tag_name": "Feature Requests",
+        "tag_icon": "https://i.ibb.co.com/fCsSLk0/feature-requests.png"
+    }
+]

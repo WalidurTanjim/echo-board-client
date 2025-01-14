@@ -1,5 +1,6 @@
 import React from 'react';
 import Banner from '../Banner/Banner';
+import Tags from '../Tags/Tags';
 
 const Home = () => {
     return (
@@ -7,6 +8,7 @@ const Home = () => {
             <div className='py-10 bg-gradient-to-r from-[#fafcff] to-[#edf2fc]'>
                 <Banner />
             </div>
+            <Tags />
         </section>
     );
 };
