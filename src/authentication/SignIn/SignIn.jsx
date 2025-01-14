@@ -14,6 +14,8 @@ const SignIn = () => {
     const { signInUser } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
+    const triggeredLocation = location.state?.from?.pathname;
+    // console.log(location, triggeredLocation);
 
     const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm()
 
@@ -24,7 +26,7 @@ const SignIn = () => {
         signInUser(data.email, data.password)
         .then(result => {
             const user = result.user;
-            navigate('/');
+            navigate(triggeredLocation || '/');
             reset();
             console.log("Sign in user:", user);
         })

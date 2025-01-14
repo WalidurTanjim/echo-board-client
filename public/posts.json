@@ -9,15 +9,11 @@
         "post": {
             "title": "How to Start Learning Web Development",
             "description": "A comprehensive guide on how to begin your journey in web development. Tips, tools, and resources to get started.",
-            "tags": [
-                "Web Development",
-                "Career Advice",
-                "General Discussion"
-            ],
+            "tags": "General Discussion",
             "postTime": "2025-01-14T10:00:00Z",
             "commentButton": true,
-            "upVoteIcon": "9",
-            "downVoteIcon": "3",
+            "upVoteIcon": 0,
+            "downVoteIcon": 0,
             "shareButton": true
         }
     },
@@ -31,15 +27,11 @@
         "post": {
             "title": "Best Practices for Frontend Development",
             "description": "Explore the best practices for frontend development, including code organization, responsiveness, and performance optimization.",
-            "tags": [
-                "Web Development",
-                "DIY & Crafts",
-                "Design"
-            ],
+            "tags": "DIY & Crafts",
             "postTime": "2025-01-13T14:30:00Z",
             "commentButton": true,
-            "upVoteIcon": "9",
-            "downVoteIcon": "3",
+            "upVoteIcon": 0,
+            "downVoteIcon": 0,
             "shareButton": true
         }
     },
@@ -53,15 +45,11 @@
         "post": {
             "title": "The Future of Artificial Intelligence",
             "description": "A discussion on how AI is shaping the future of technology, its applications, and ethical considerations.",
-            "tags": [
-                "Cybersecurity",
-                "Technology",
-                "General Discussion"
-            ],
+            "tags": "Technology",
             "postTime": "2025-01-12T09:15:00Z",
             "commentButton": true,
-            "upVoteIcon": "9",
-            "downVoteIcon": "3",
+            "upVoteIcon": 0,
+            "downVoteIcon": 0,
             "shareButton": true
         }
     },
@@ -75,15 +63,11 @@
         "post": {
             "title": "Understanding React Hooks",
             "description": "A deep dive into React Hooks, explaining their purpose, usage, and common patterns in modern React development.",
-            "tags": [
-                "Web Development",
-                "Bug Reports",
-                "React"
-            ],
+            "tags": "Web Development",
             "postTime": "2025-01-11T16:45:00Z",
             "commentButton": true,
-            "upVoteIcon": "9",
-            "downVoteIcon": "3",
+            "upVoteIcon": 0,
+            "downVoteIcon": 0,
             "shareButton": true
         }
     },
@@ -97,15 +81,11 @@
         "post": {
             "title": "Exploring the World of Blockchain",
             "description": "An introductory post about blockchain technology, its uses, and how it is transforming industries like finance and healthcare.",
-            "tags": [
-                "Blockchain",
-                "Finance",
-                "Technology"
-            ],
+            "tags": "Cybersecurity",
             "postTime": "2025-01-10T18:00:00Z",
             "commentButton": true,
-            "upVoteIcon": "9",
-            "downVoteIcon": "3",
+            "upVoteIcon": 0,
+            "downVoteIcon": 0,
             "shareButton": true
         }
     }

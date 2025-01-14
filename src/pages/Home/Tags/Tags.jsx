@@ -5,7 +5,6 @@ import Spinner from '../../../components/Spinner/Spinner';
 
 const Tags = () => {
     const [tags, isPending, isError, error] = useTags();
-    console.log(tags);
 
     return (
         <section className='tags container mx-auto px-6 py-14'>
