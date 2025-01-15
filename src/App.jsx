@@ -5,11 +5,13 @@ import Home from './pages/Home/Home/Home'
 import ErrorPage from './pages/ErrorPage/ErrorPage'
 import SignIn from './authentication/SignIn/SignIn'
 import SignUp from './authentication/SignUp/SignUp'
+import PostDetails from './pages/PostDetails/PostDetails'
 
 function App() {
   const routes = createBrowserRouter([
     {path: '/', element: <MainLayout />, errorElement: <ErrorPage />, children: [
       {path: '/', element: <Home />},
+      {path: '/post/:id', element: <PostDetails />},
       {path: 'sign-in', element: <SignIn />},
       {path: 'sign-up', element: <SignUp />}
     ]}
