@@ -81,31 +81,35 @@ const PostDetails = () => {
 
     // onSubmit handler
     const onSubmit = async(data) => {
-        setErrMsg('');
+        if(!user && !user?.email){
+            return navigate('/sign-in', { state: { from: location } }, { replace: true });
+        }else{
+            setErrMsg('');
 
-        const reviewData = {
-            userName: user?.displayName,
-            userEmail: user?.email,
-            userPhoto: user?.photoURL,
-            addReviewDate: moment().format("YYYY-MM-DD"),
-            review: data?.review,
-            postId: id,
-            reviewUpVote: 0,
-            reviewDownVote: 0
-        }
-        
-        try{
-            const res = await axiosSecure.post('/reviews', reviewData);
-            const data = await res.data;
-            
-            if(data.insertedId){
-                reset();
-                reviewRefetch();
-                toast.success('Review added successfully.');
+            const reviewData = {
+                userName: user?.displayName,
+                userEmail: user?.email,
+                userPhoto: user?.photoURL,
+                addReviewDate: moment().format("YYYY-MM-DD"),
+                review: data?.review,
+                postId: id,
+                reviewUpVote: 0,
+                reviewDownVote: 0
             }
-        }catch(err){
+            
+            try{
+                const res = await axiosSecure.post('/reviews', reviewData);
+                const data = await res.data;
+                
+                if(data.insertedId){
+                    reset();
+                    reviewRefetch();
+                    toast.success('Review added successfully.');
+                }
+            }catch(err){
             console.error(err);
             toast.error(err?.message);
+            }
         }
     }
 
@@ -152,7 +156,7 @@ const PostDetails = () => {
                     {/* comment count */}
                     <div className='flex items-center cursor-default'>
                         <ChatBubbleOvalLeftEllipsisIcon className="size-4 text-gray-400" />
-                        <span className='text-xs text-gray-500'>{post_details?.post?.upVoteIcon}</span>
+                        <span className='text-xs text-gray-500'>{reviews_by_id.length > 0 ? reviews_by_id.length : 0}</span>
                     </div>
 
                     {/* share count */}
