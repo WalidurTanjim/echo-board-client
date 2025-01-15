@@ -8,6 +8,8 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useForm } from "react-hook-form";
 import moment from 'moment';
 import toast from 'react-hot-toast';
+import Spinner from '../../components/Spinner/Spinner';
+import Review from '../../components/Review/Review';
 
 const PostDetails = () => {
     const [errMsg, setErrMsg] = useState('');
@@ -73,7 +75,6 @@ const PostDetails = () => {
         queryFn: async() => {
             const res = await axiosPublic.get(`/reviews/${id}`);
             const data = await res?.data;
-            console.log('Review based on id:', data);
             return data;
         }
     })
@@ -88,15 +89,18 @@ const PostDetails = () => {
             userPhoto: user?.photoURL,
             addReviewDate: moment().format("YYYY-MM-DD"),
             review: data?.review,
-            postId: id
+            postId: id,
+            reviewUpVote: 0,
+            reviewDownVote: 0
         }
         
         try{
             const res = await axiosSecure.post('/reviews', reviewData);
             const data = await res.data;
-            console.log('Add review response:', data);
+            
             if(data.insertedId){
                 reset();
+                reviewRefetch();
                 toast.success('Review added successfully.');
             }
         }catch(err){
@@ -170,6 +174,20 @@ const PostDetails = () => {
 
                     <button type='submit' className="w-full px-6 py-2.5 mt-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Add Review</button>
                 </form>
+            </div>
+
+            {/* all reviews by post id */}
+            <div className="reviews mt-10">
+                {
+                    reviewPending ? (
+                        <Spinner />
+                    ) : reviewIsError ? (
+                        <div className='pb-14'>
+                            <h1 className='text-xl md:text-2xl font-medium text-red-600 text-center'>{error?.message}</h1>
+                        </div>
+                    ) : 
+                    reviews_by_id?.map(review => <Review key={review?._id} review={review} />)
+                }
             </div>
         </section>
     );
