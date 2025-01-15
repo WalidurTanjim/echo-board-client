@@ -18,6 +18,7 @@ const PostDetails = () => {
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
 
+    // useForm of react-hook-form
     const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm()
 
     // get post details based on _id
@@ -65,6 +66,17 @@ const PostDetails = () => {
             console.error(err);
         }
     }
+
+    // get all reviews by id using tanstackQuery
+    const { data: reviews_by_id = [], isPending: reviewPending, isError: reviewIsError, error: reviewError, refetch: reviewRefetch } = useQuery({
+        queryKey: ['reviews_by_id', axiosPublic, id],
+        queryFn: async() => {
+            const res = await axiosPublic.get(`/reviews/${id}`);
+            const data = await res?.data;
+            console.log('Review based on id:', data);
+            return data;
+        }
+    })
 
     // onSubmit handler
     const onSubmit = async(data) => {
@@ -153,6 +165,8 @@ const PostDetails = () => {
 
                 <form className='mt-3' onSubmit={handleSubmit(onSubmit)}>
                     <textarea name="" rows="3" className='block w-full py-3 text-sm text-gray-700 bg-white border rounded-lg px-3 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40' placeholder='Add a review' {...register("review", { required: true })} />
+
+                    {errMsg ? <p className='text-xs text-red-600 font-medium mt-2 ms-1'>{errMsg}</p> : undefined}
 
                     <button type='submit' className="w-full px-6 py-2.5 mt-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Add Review</button>
                 </form>
