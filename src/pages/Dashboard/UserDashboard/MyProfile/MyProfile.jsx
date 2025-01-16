@@ -3,6 +3,8 @@ import DashboardRoutes from '../../../../components/DashboardRoutes/DashboardRou
 import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import Spinner from '../../../../components/Spinner/Spinner';
+import Post from '../../../../components/Post/Post';
 
 const MyProfile = () => {
     const { user } = useAuth();
@@ -14,9 +16,18 @@ const MyProfile = () => {
         queryFn: async() => {
             const res = await axiosSecure.get(`/users?email=${user?.email}`);
             const data = await res?.data;
-            if(data){
-                return data;
-            }
+            if(data) return data;
+        }
+    })
+
+    // get post based on signed in user email
+    const { data: author_post = [], isPending, isError, error, refetch } = useQuery({
+        queryKey: ['author_post', axiosSecure, user?.email],
+        queryFn: async() => {
+            const res = await axiosSecure.get(`/posts?email=${user?.email}`);
+            const data = await res?.data;
+            
+            if(data) return data;
         }
     })
 
@@ -61,6 +72,25 @@ const MyProfile = () => {
 
                         <p className='text-slate-800 text-sm font-medium'>Badges:</p>
                         <h1 className='text-gray-600 mb-2'>{loaded_user?.badge}</h1>
+                    </div>
+
+                    {/* author post */}
+                    <div className="author_post mt-5">
+                        <h1 className='text-xl font-medium text-slate-700'>My posts:</h1>
+
+                        <div className='mt-3'>
+                            {
+                                isPending ? (
+                                    <Spinner />
+                                ) : isError ? (
+                                    <div className='py-12 flex items-center justify-center'>
+                                        <h1 className='text-xl font-medium text-red-600'>{error?.message}</h1>
+                                    </div>
+                                ) : (
+                                    author_post?.map(post => <Post post={post} />)
+                                )
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
