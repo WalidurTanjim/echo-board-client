@@ -1,12 +1,14 @@
 import { createUserWithEmailAndPassword, deleteUser, GoogleAuthProvider, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import React, { createContext, useEffect, useState } from 'react';
 import auth from '../firebase/firebase.config';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const axiosPublic = useAxiosPublic();
 
     // googleSignIn
     const googleProvider = new GoogleAuthProvider();
@@ -61,10 +63,36 @@ const AuthProvider = ({ children }) => {
 
     // observer
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, currentUser => {
+        const unsubscribe = onAuthStateChanged(auth, async currentUser => {
             setUser(currentUser);
+
+            if(currentUser && currentUser?.email){
+                const userInfo = { email: currentUser?.email };
+
+                try{
+                    const res = await axiosPublic.post('/create-token', userInfo);
+                    const data = await res?.data;
+                    console.log("Create token response:", data);
+                    if(data.success){
+                        setLoading(false);
+                    }
+                }catch(err){
+                    console.error(err);
+                }
+            }else{
+                try{
+                    const res = await axiosPublic.post('/logout');
+                    const data = await res?.data;
+                    console.log('Logout response:', data);
+                    if(data.success){
+                        setLoading(false);
+                    }
+                }catch(err){
+                    console.error(err);
+                }
+            }
+
             console.log("Current user:", currentUser);
-            setLoading(false);
         });
         
         return () => {
