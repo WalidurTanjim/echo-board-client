@@ -1,9 +1,24 @@
 import React from 'react';
 import DashboardRoutes from '../../../../components/DashboardRoutes/DashboardRoutes';
 import useAuth from '../../../../hooks/useAuth';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
 
 const MyProfile = () => {
     const { user } = useAuth();
+    const axiosSecure = useAxiosSecure();
+
+    // get signed in user by query email
+    const { data: loaded_user = {} } = useQuery({
+        queryKey: ['loaded_user', axiosSecure, user?.email],
+        queryFn: async() => {
+            const res = await axiosSecure.get(`/users?email=${user?.email}`);
+            const data = await res?.data;
+            if(data){
+                return data;
+            }
+        }
+    })
 
     return (
         <section className='my-profile'>
@@ -45,7 +60,7 @@ const MyProfile = () => {
                         <h1 className='text-gray-600 mb-2'>{user?.email}</h1>
 
                         <p className='text-slate-800 text-sm font-medium'>Badges:</p>
-                        <h1 className='text-gray-600 mb-2'>Bronze or Gold</h1>
+                        <h1 className='text-gray-600 mb-2'>{loaded_user?.badge}</h1>
                     </div>
                 </div>
             </div>
