@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, deleteUser, GoogleAuthProvider, onAuthS
 import React, { createContext, useEffect, useState } from 'react';
 import auth from '../firebase/firebase.config';
 import useAxiosPublic from '../hooks/useAxiosPublic';
+import toast from 'react-hot-toast';
 
 export const AuthContext = createContext(null);
 
@@ -66,15 +67,35 @@ const AuthProvider = ({ children }) => {
         const unsubscribe = onAuthStateChanged(auth, async currentUser => {
             setUser(currentUser);
 
-            if(currentUser && currentUser?.email){
+            if(currentUser){
                 const userInfo = { email: currentUser?.email };
 
                 try{
                     const res = await axiosPublic.post('/create-token', userInfo);
                     const data = await res?.data;
-                    console.log("Create token response:", data);
+                    
                     if(data.success){
-                        setLoading(false);
+                        const dbUserInfo = {
+                            userName: currentUser?.displayName,
+                            userEmail: currentUser?.email,
+                            userPhoto: currentUser?.photoURL
+                        }
+
+                        try{
+                            const res = await axiosPublic.post('/users', dbUserInfo);
+                            const data = await res?.data;
+                            
+                            if(data.insertedId){
+                                toast.success('Account created successfully.');
+                                setLoading(false);
+                            }
+                            if(data?.message){
+                                toast.success('Signin your account successfully');
+                                setLoading(false);
+                            }
+                        }catch(err){
+                            console.error(err);
+                        }
                     }
                 }catch(err){
                     console.error(err);
@@ -83,7 +104,7 @@ const AuthProvider = ({ children }) => {
                 try{
                     const res = await axiosPublic.post('/logout');
                     const data = await res?.data;
-                    console.log('Logout response:', data);
+                    
                     if(data.success){
                         setLoading(false);
                     }
