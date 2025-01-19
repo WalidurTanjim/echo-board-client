@@ -8,7 +8,7 @@ const usePosts = () => {
     const { data: posts = [], isPending, isError, error, refetch } = useQuery({
         queryKey: ['posts'], 
         queryFn: async() => {
-            const res = await axiosPublic.get('/posts');
+            const res = await axiosPublic.get('/all-posts');
             const data = await res?.data;
             return data;
         }
