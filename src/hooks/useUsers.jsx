@@ -8,12 +8,12 @@ const useUsers = () => {
     const { data: users = [], isPending, isError, error, refetch } = useQuery({
         queryKey: ['users', axiosSecure],
         queryFn: async() => {
-            const res = await axiosSecure.get('/users');
+            const res = await axiosSecure.get('/all-users');
             const data = await res?.data;
             if(data) return data;
         }
     })
-    
+
     return [ users, isPending, isError, error, refetch];
 };
 
