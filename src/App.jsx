@@ -12,6 +12,7 @@ import AddPost from './pages/Dashboard/UserDashboard/AddPost/AddPost'
 import MyPosts from './pages/Dashboard/UserDashboard/MyPosts/MyPosts'
 import PostReviews from './components/PostReviews/PostReviews'
 import ManageUsers from './pages/Dashboard/AdminDashboard/ManageUsers/ManageUsers'
+import AdminRoute from './AdminRoute/AdminRoute'
 
 function App() {
   const routes = createBrowserRouter([
@@ -23,7 +24,7 @@ function App() {
     ]},
     {path: 'dashboard', element: <DashboardLayout />, children: [
       // admin dashboard
-      {path: 'manage-users', element: <ManageUsers />},
+      {path: 'manage-users', element: <AdminRoute><ManageUsers /></AdminRoute>},
 
       // users dashboard
       {path: 'my-profile', element: <MyProfile />},
