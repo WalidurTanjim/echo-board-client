@@ -3,6 +3,8 @@ import DashboardRoutes from '../../../../components/DashboardRoutes/DashboardRou
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import { useForm } from "react-hook-form";
 import useAuth from '../../../../hooks/useAuth';
+import { PencilSquareIcon, EnvelopeIcon, PencilIcon } from '@heroicons/react/24/outline';
+
 
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
