@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import logo from '../../../assets/logo.png'
+import useAdmin from '../../../hooks/useAdmin';
 
 const Navbar = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
     const [toggleLinks, setToggleLinks] = useState(false);
+    const [isAdmin] = useAdmin();
 
     const { user, logOut } = useAuth();
 
@@ -86,9 +88,15 @@ const Navbar = () => {
                                 toggleLinks ? 
                                 <div className="absolute top-10 right-0 p-2 rounded-lg w-52 border bg-white z-50">
                                     <p className="text-xs text-gray-600 p-2 border rounded-md bg-blue-100 cursor-not-allowed mb-1">{user?.displayName}</p>
-                                    <Link to='/dashboard/my-profile'>
-                                        <p className="text-xs text-gray-600 p-2 rounded-md hover:bg-gray-100 mb-1">Dashboard</p>
-                                    </Link>
+                                    {
+                                        isAdmin ?
+                                        <Link to='/dashboard/manage-users'>
+                                            <p className="text-xs text-gray-600 p-2 rounded-md hover:bg-gray-100 mb-1">Dashboard</p>
+                                        </Link> :
+                                        <Link to='/dashboard/my-profile'>
+                                            <p className="text-xs text-gray-600 p-2 rounded-md hover:bg-gray-100 mb-1">Dashboard</p>
+                                        </Link>
+                                    }
                                     <p className="text-xs text-gray-600 p-2 rounded-md cursor-pointer hover:bg-gray-100 mb-1" onClick={logOutHandler}>Sign Out</p>
                                 </div> : ''
                             }
