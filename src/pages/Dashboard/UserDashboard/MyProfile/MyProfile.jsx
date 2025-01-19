@@ -87,7 +87,7 @@ const MyProfile = () => {
                                         <h1 className='text-xl font-medium text-red-600'>{error?.message}</h1>
                                     </div>
                                 ) : (
-                                    author_post?.map(post => <Post post={post} />)
+                                    author_post?.map(post => <Post key={post?._id} post={post} />)
                                 )
                             }
                         </div>
