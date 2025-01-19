@@ -1,4 +1,3 @@
-import React from 'react';
 import DashboardRoutes from '../../../../components/DashboardRoutes/DashboardRoutes';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import { useQuery } from '@tanstack/react-query';
@@ -7,6 +6,7 @@ import useAuth from '../../../../hooks/useAuth';
 import Spinner from '../../../../components/Spinner/Spinner';
 import { ChevronDoubleUpIcon, ChevronDoubleDownIcon, ChatBubbleOvalLeftEllipsisIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 const MyPosts = () => {
     const { user } = useAuth();
@@ -19,7 +19,6 @@ const MyPosts = () => {
             return data;
         }
     })
-
 
     // handleDelete
     const handleDelete = async(id) => {
@@ -36,7 +35,7 @@ const MyPosts = () => {
                 try{
                     const res = await axiosSecure.delete(`/posts/${id}`);
                     const data = res?.data;
-                    console.log('delete post: ', data);
+
                     if(data.deletedCount > 0){
                         Swal.fire({
                             title: "Deleted!",
@@ -149,9 +148,11 @@ const MyPosts = () => {
                                                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                         <div className="flex items-center gap-x-6">
                                                                             {/* comment button */}
-                                                                            <button className="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
-                                                                                <ChatBubbleOvalLeftEllipsisIcon className='w-5 h-5' />
-                                                                            </button>
+                                                                            <Link to={`/dashboard/post-reviews/${_id}`}>
+                                                                                <button className="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                                                                    <ChatBubbleOvalLeftEllipsisIcon className='w-5 h-5' />
+                                                                                </button>
+                                                                            </Link>
 
                                                                             {/* delete button */}
                                                                             <button className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none" onClick={() => handleDelete(_id)}>

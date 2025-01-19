@@ -10,6 +10,7 @@ import DashboardLayout from './layout/DashboardLayout'
 import MyProfile from './pages/Dashboard/UserDashboard/MyProfile/MyProfile'
 import AddPost from './pages/Dashboard/UserDashboard/AddPost/AddPost'
 import MyPosts from './pages/Dashboard/UserDashboard/MyPosts/MyPosts'
+import PostReviews from './components/PostReviews/PostReviews'
 
 function App() {
   const routes = createBrowserRouter([
@@ -23,7 +24,8 @@ function App() {
       // users dashboard
       {path: 'my-profile', element: <MyProfile />},
       {path: 'add-post', element: <AddPost />},
-      {path: 'my-posts', element: <MyPosts />}
+      {path: 'my-posts', element: <MyPosts />},
+      {path: 'post-reviews/:id', element: <PostReviews />}
     ]}
   ])
 
