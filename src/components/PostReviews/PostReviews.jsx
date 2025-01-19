@@ -16,7 +16,6 @@ const PostReviews = () => {
         queryFn: async () => {
             const res = await axiosSecure.get(`/reviews/${id}`);
             const data = await res?.data;
-            console.log(data);
             return data;
         }
     })

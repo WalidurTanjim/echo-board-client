@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 const DashboardRoutes = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+    const isAdmin = true;
+
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
@@ -33,17 +35,37 @@ const DashboardRoutes = () => {
                     {/* navLinks nav starts */}
                     <nav className="mt-4">
                         <ul className="space-y-2">
-                            <Link to='/dashboard/my-profile'>
-                                <li className="block text-sm py-2 px-2 mb-1 rounded hover:bg-gray-200">My Profile</li>
-                            </Link>
+                            {
+                                isAdmin ?
+                                <>
+                                    <Link to='/dashboard/admin-profile'>
+                                        <li className="block text-sm py-2 px-2 mb-1 rounded hover:bg-gray-200">Admin Profile</li>
+                                    </Link>
+                                    <Link to='/dashboard/manage-users'>
+                                        <li className="block text-sm py-2 px-2 mb-1 rounded hover:bg-gray-200">Manage Users</li>
+                                    </Link>
+                                    <Link to='/dashboard/reported-comments'>
+                                        <li className="block text-sm py-2 px-2 mb-1 rounded hover:bg-gray-200">Reported Comments</li>
+                                    </Link>
+                                    <Link to='/dashboard/make-announcement'>
+                                        <li className="block text-sm py-2 px-2 mb-1 rounded hover:bg-gray-200">Make Announcement</li>
+                                    </Link>
+                                </>
+                                : 
+                                <>
+                                    <Link to='/dashboard/my-profile'>
+                                        <li className="block text-sm py-2 px-2 mb-1 rounded hover:bg-gray-200">My Profile</li>
+                                    </Link>
 
-                            <Link to='/dashboard/add-post'>
-                                <li className="block text-sm py-2 px-2 mb-1 rounded hover:bg-gray-200">Add Post</li>
-                            </Link>
+                                    <Link to='/dashboard/add-post'>
+                                        <li className="block text-sm py-2 px-2 mb-1 rounded hover:bg-gray-200">Add Post</li>
+                                    </Link>
 
-                            <Link to='/dashboard/my-posts'>
-                                <li className="block text-sm py-2 px-2 mb-1 rounded hover:bg-gray-200">My Posts</li>
-                            </Link>
+                                    <Link to='/dashboard/my-posts'>
+                                        <li className="block text-sm py-2 px-2 mb-1 rounded hover:bg-gray-200">My Posts</li>
+                                    </Link>
+                                </>
+                            }
 
                             <hr className="mt-7" />
 
