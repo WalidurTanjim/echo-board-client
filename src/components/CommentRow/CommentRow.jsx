@@ -1,16 +1,29 @@
 import React, { useState } from 'react';
 import { ChevronDoubleUpIcon, ChevronDoubleDownIcon, ChatBubbleOvalLeftEllipsisIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import toast from 'react-hot-toast';
+import useAuth from '../../hooks/useAuth';
 
 const CommentRow = ({ comment, refetch }) => {
     const [feedback, setFeedback] = useState('');
     const [isReported, setIsReported] = useState(false);
     const axiosSecure = useAxiosSecure();
+    const { setReviewData, setOpen } = useAuth();
 
     const { _id, userName, userEmail, userPhoto, review, reported } = comment;
     // console.log(comment);
+
+    // handleShowModal
+    const handleShowModal = async id => {
+        try {
+            const res = await axiosSecure.get(`/get-review/${id}`);
+            const data = await res?.data;
+            setReviewData(data);
+            setOpen(true);
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     // handleChangeFeedback
     const handleChangeFeedback = e => {
@@ -19,19 +32,19 @@ const CommentRow = ({ comment, refetch }) => {
 
     // handleReportClick
     const handleReportClick = async (id) => {
-        if(feedback){
+        if (feedback) {
             setIsReported(true);
 
-            try{
+            try {
                 const res = await axiosSecure.patch(`/report-review/${id}`);
                 const data = await res?.data;
                 // console.log('Report review response from server:', data);
 
-                if(data?.modifiedCount > 0){
+                if (data?.modifiedCount > 0) {
                     toast.success('Thank you for your feedback! The comment has been successfully reported.');
-                    if(refetch) refetch();
+                    if (refetch) refetch();
                 }
-            }catch(err){
+            } catch (err) {
                 console.error(err);
             }
 
@@ -63,18 +76,18 @@ const CommentRow = ({ comment, refetch }) => {
             </td>
 
             {/* comment */}
-            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{review.length > 20 ? review.slice(0, 20)+'...' : review}
-            {review.length > 20 ? <Link className='text-xs text-blue-500 hover:text-blue-600'>Read more</Link> : undefined}</td>
+            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{review.length > 20 ? review.slice(0, 20) + '...' : review}
+                {review.length > 20 ? <span className='text-xs text-blue-500 hover:text-blue-600 cursor-default' onClick={() => handleShowModal(_id)}>Read more</span> : undefined}</td>
 
             {/* feedback */}
             <td className="px-4 py-4 text-sm whitespace-nowrap">
                 <div className="flex items-center gap-x-2">
                     <select className="block w-full py-1 text-xs text-gray-700 bg-white border rounded-md px-3 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" value={feedback} onChange={handleChangeFeedback}>
-                            <option value="" disabled>Select Feedback</option>
-                            <option value="Helpful">Helpful</option>
-                            <option value="Irrelevant">Irrelevant</option>
-                            <option value="Inappropriate">Inappropriate</option>
-                        </select>
+                        <option value="" disabled>Select Feedback</option>
+                        <option value="Helpful">Helpful</option>
+                        <option value="Irrelevant">Irrelevant</option>
+                        <option value="Inappropriate">Inappropriate</option>
+                    </select>
                 </div>
             </td>
 

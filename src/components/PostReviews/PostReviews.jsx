@@ -7,10 +7,11 @@ import { useQuery } from '@tanstack/react-query';
 import Spinner from '../Spinner/Spinner';
 import CommentRow from '../CommentRow/CommentRow';
 import DashboardRoutes from '../DashboardRoutes/DashboardRoutes';
+import ReviewModal from '../ReviewModal/ReviewModal';
 
 const PostReviews = () => {
     const { id } = useParams();
-    const { user } = useAuth();
+    const { user, open } = useAuth();
     const axiosSecure = useAxiosSecure();
     const { data: post_reviews = [], isPending, isError, error, refetch } = useQuery({
         queryKey: ['post_reviews', axiosSecure],
@@ -156,6 +157,8 @@ const PostReviews = () => {
                     </div>
                 </section>
             </div>
+
+            { open ? <ReviewModal /> : undefined}
         </section>
     );
 };
