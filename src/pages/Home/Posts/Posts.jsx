@@ -23,7 +23,7 @@ const Posts = () => {
                     ) : (
                         <div>
                             {
-                                posts?.map(post => <Post key={post?._id} post={post} refetch={refetch} />)
+                                posts?.slice(0,5)?.map(post => <Post key={post?._id} post={post} refetch={refetch} />)
                             }
                         </div>
                     )
