@@ -36,7 +36,7 @@ const CommentRow = ({ comment, refetch }) => {
             setIsReported(true);
 
             try {
-                const res = await axiosSecure.patch(`/report-review/${id}`);
+                const res = await axiosSecure.patch(`/report-review/${id}`, { feedback });
                 const data = await res?.data;
                 // console.log('Report review response from server:', data);
 
