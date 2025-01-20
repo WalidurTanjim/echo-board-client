@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import logo from '../../../assets/logo.png'
 import useAdmin from '../../../hooks/useAdmin';
+import { BellIcon } from '@heroicons/react/24/outline';
 
 const Navbar = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
@@ -36,6 +37,10 @@ const Navbar = () => {
                 EchoBoard</Link>
 
                 <div className="sm:order-3 flex items-center gap-x-2">
+                    <div className='p-1 rounded-full border hover:bg-gray-50 active:bg-transparent'>
+                        <BellIcon className='w-5 h-5 text-gray-600' />
+                    </div>
+
                     <button
                         type="button"
                         className="sm:hidden hs-collapse-toggle relative size-7 flex justify-center items-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-neutral-700 dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
