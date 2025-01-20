@@ -3,6 +3,7 @@ import SectionTitle from '../../../components/SectionTitle/SectionTitle';
 import usePosts from '../../../hooks/usePosts';
 import Spinner from '../../../components/Spinner/Spinner';
 import Post from '../../../components/Post/Post';
+import { Link } from 'react-router-dom';
 
 const Posts = () => {
     const [posts, isPending, isError, error, refetch] = usePosts();
@@ -29,7 +30,9 @@ const Posts = () => {
                 }
 
                 <div className="flex justify-center pt-5">
-                    <button type="submit" className="py-2 px-6 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Show More</button>
+                    <Link to="/all-posts">
+                        <button type="submit" className="py-2 px-6 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Show More</button>
+                    </Link>
                 </div>
             </div>
         </section>

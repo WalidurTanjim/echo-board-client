@@ -15,11 +15,13 @@ import ManageUsers from './pages/Dashboard/AdminDashboard/ManageUsers/ManageUser
 import AdminRoute from './AdminRoute/AdminRoute'
 import Announcement from './pages/Dashboard/AdminDashboard/Announcement/Announcement'
 import ReportedComments from './pages/Dashboard/AdminDashboard/ReportedComments/ReportedComments'
+import AllPosts from './pages/AllPosts/AllPosts'
 
 function App() {
   const routes = createBrowserRouter([
     {path: '/', element: <MainLayout />, errorElement: <ErrorPage />, children: [
       {path: '/', element: <Home />},
+      {path: 'all-posts', element: <AllPosts />},
       {path: 'post/:id', element: <PostDetails />},
       {path: 'sign-in', element: <SignIn />},
       {path: 'sign-up', element: <SignUp />}
