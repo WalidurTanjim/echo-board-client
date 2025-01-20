@@ -17,6 +17,7 @@ import Announcement from './pages/Dashboard/AdminDashboard/Announcement/Announce
 import ReportedComments from './pages/Dashboard/AdminDashboard/ReportedComments/ReportedComments'
 import AllPosts from './pages/AllPosts/AllPosts'
 import AllAnnouncements from './pages/AllAnnouncements/AllAnnouncements'
+import AdminProfile from './pages/Dashboard/AdminDashboard/AdminProfile/AdminProfile'
 
 function App() {
   const routes = createBrowserRouter([
@@ -30,6 +31,7 @@ function App() {
     ]},
     {path: 'dashboard', element: <DashboardLayout />, children: [
       // admin dashboard
+      {path: 'admin-profile', element: <AdminRoute><AdminProfile /></AdminRoute>},
       {path: 'manage-users', element: <AdminRoute><ManageUsers /></AdminRoute>},
       {path: 'reported-comments', element: <AdminRoute><ReportedComments /></AdminRoute>},
       {path: 'make-announcement', element: <AdminRoute><Announcement /></AdminRoute>},
