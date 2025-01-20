@@ -43,7 +43,34 @@ const ReportedComment = ({ review, refetch }) => {
 
     // handleRemoveReport
     const handleRemoveReport = async id => {
-        console.log(id);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to publish this comment again?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, publish it!"
+        }).then(async(result) => {
+            if (result.isConfirmed) {
+                try {
+                    const res = await axiosSecure.patch(`/remove-report/${id}`);
+                    const data = await res?.data;
+                    // console.log('remove report:', data);
+                    
+                    if(data.modifiedCount > 0){
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Report removed from this comment.",
+                            icon: "success"
+                        });
+                        refetch();
+                    }
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+        });
     }
 
     return (
