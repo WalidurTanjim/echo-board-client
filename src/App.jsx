@@ -16,12 +16,14 @@ import AdminRoute from './AdminRoute/AdminRoute'
 import Announcement from './pages/Dashboard/AdminDashboard/Announcement/Announcement'
 import ReportedComments from './pages/Dashboard/AdminDashboard/ReportedComments/ReportedComments'
 import AllPosts from './pages/AllPosts/AllPosts'
+import AllAnnouncements from './pages/AllAnnouncements/AllAnnouncements'
 
 function App() {
   const routes = createBrowserRouter([
     {path: '/', element: <MainLayout />, errorElement: <ErrorPage />, children: [
       {path: '/', element: <Home />},
       {path: 'all-posts', element: <AllPosts />},
+      {path: 'all-announcements', element: <AllAnnouncements />},
       {path: 'post/:id', element: <PostDetails />},
       {path: 'sign-in', element: <SignIn />},
       {path: 'sign-up', element: <SignUp />}

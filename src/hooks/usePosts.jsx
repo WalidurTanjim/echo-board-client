@@ -12,7 +12,14 @@ const usePosts = () => {
         queryFn: async() => {
             const res = await axiosPublic.get(`/all-posts?search=${search}`);
             const data = await res?.data;
-            return data;
+            
+            // sort posts by newest to oldest
+            const sortedPosts = data.sort((a, b) => {
+                const dateA = new Date(a.post.postTime);
+                const dateB = new Date(b.post.postTime);
+                return dateB - dateA; // Newest to oldest
+            });
+            return sortedPosts;
         }
     })
 

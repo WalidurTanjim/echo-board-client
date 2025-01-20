@@ -15,8 +15,11 @@ const Post = ({ post }) => {
                 <div className='author_info flex justify-between my-3'>
                     {/* author info */}
                     <div className='flex gap-2'>
-                        <img src={author?.image} alt="" className='w-[37px] h-[30px] rounded-md' />
-                        <h3 className='text-sm text-slate-800 font-medium'>{author?.name}</h3>
+                        <img src={author?.image} alt="" className='w-[40px] h-[35px] rounded-md' />
+                        <div>
+                            <h3 className='text-sm text-slate-800 font-medium'>{author?.name}</h3>
+                            <p className='flex gap-x-1 items-center text-xs text-gray-600'>{userPost?.postTime.split("T")[0]}</p>
+                        </div>
                     </div>
 
                     <h3 className='text-xs px-3 rounded-full border border-teal-200 bg-teal-50 text-teal-500 h-[23px] flex items-center'>{userPost?.tags}</h3>
