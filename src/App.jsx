@@ -14,6 +14,7 @@ import PostReviews from './components/PostReviews/PostReviews'
 import ManageUsers from './pages/Dashboard/AdminDashboard/ManageUsers/ManageUsers'
 import AdminRoute from './AdminRoute/AdminRoute'
 import Announcement from './pages/Dashboard/AdminDashboard/Announcement/Announcement'
+import ReportedComments from './pages/Dashboard/AdminDashboard/ReportedComments/ReportedComments'
 
 function App() {
   const routes = createBrowserRouter([
@@ -26,6 +27,7 @@ function App() {
     {path: 'dashboard', element: <DashboardLayout />, children: [
       // admin dashboard
       {path: 'manage-users', element: <AdminRoute><ManageUsers /></AdminRoute>},
+      {path: 'reported-comments', element: <AdminRoute><ReportedComments /></AdminRoute>},
       {path: 'make-announcement', element: <AdminRoute><Announcement /></AdminRoute>},
 
       // users dashboard
