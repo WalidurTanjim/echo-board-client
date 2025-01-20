@@ -4,11 +4,13 @@ import useAuth from '../../../hooks/useAuth';
 import logo from '../../../assets/logo.png'
 import useAdmin from '../../../hooks/useAdmin';
 import { BellIcon } from '@heroicons/react/24/outline';
+import useAnnouncement from '../../../hooks/useAnnouncement';
 
 const Navbar = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
     const [toggleLinks, setToggleLinks] = useState(false);
     const [isAdmin] = useAdmin();
+    const [ announcements, isPending, isError, error, refetch ] = useAnnouncement();
 
     const { user, logOut } = useAuth();
 
@@ -37,9 +39,12 @@ const Navbar = () => {
                 EchoBoard</Link>
 
                 <div className="sm:order-3 flex items-center gap-x-2">
-                    <div className='p-1 rounded-full border hover:bg-gray-50 active:bg-transparent'>
-                        <BellIcon className='w-5 h-5 text-gray-600' />
-                    </div>
+                    <Link to='/announcement'>
+                        <div className='relative p-1 rounded-full border hover:bg-gray-50 active:bg-transparent'>
+                            <BellIcon className='w-5 h-5 text-gray-600' />
+                            <span className='absolute -top-2 -right-2 text-xs font-medium px-2 rounded-full bg-orange-300'>{announcements.length > 0 ? announcements.length : 0}</span>
+                        </div>
+                    </Link>
 
                     <button
                         type="button"
