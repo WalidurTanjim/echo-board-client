@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import banner_men from '../../../assets/banner/banner_men.webp'
 import spread from '../../../assets/banner/spread.png'
 import suitcase from '../../../assets/banner/suitcase.png'
 import upload from '../../../assets/banner/upload.png'
 import './Banner.css';
+import useAuth from '../../../hooks/useAuth';
 
 const Banner = () => {
+    const { search, setSearch } = useAuth();
+
+    // handleSearchChange
+    const handleSearchChange = e => {
+        setSearch(e.target.value);
+    }
+
     return (
         <section className='banner container mx-auto px-6 grid grid-cols-5'>
             <div className='contextDiv col-span-5 lg:col-span-3 flex items-center'>
@@ -17,16 +25,11 @@ const Banner = () => {
                     <form className='w-full my-7'>
                         {/* job title field */}
                         <div className="w-full space-y-3">
-                            <input type="text" className="py-3 px-4 mb-3 shadow-sm block w-full border border-gray-200 outline-none rounded-lg text-sm focus:border-blue-300 focus:ring-blue-300 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Search post by tag" />
+                            <input type="text" className="py-3 px-4 mb-3 shadow-sm block w-full border border-gray-200 outline-none rounded-lg text-sm focus:border-blue-300 focus:ring-blue-300 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Search post by tag" onChange={handleSearchChange} />
                         </div>
 
-                        {/* city or country field */}
-                        {/* <div className="w-full space-y-3">
-                            <input type="text" className="py-3 px-4 mb-3 shadow-sm block w-full border border-gray-200 outline-none rounded-lg text-sm focus:border-blue-300 focus:ring-blue-300 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="City or country" />
-                        </div> */}
-
                         {/* find jobs button */}
-                        <button type="submit" className="py-2 px-4 w-full inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Find Post</button>
+                        {/* <button type="submit" className="py-2 px-4 w-full inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Find Post</button> */}
                     </form>
 
                     <p className='text-gray-500 text-xs'>

@@ -9,6 +9,7 @@ export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState('');
     const [reviewData, setReviewData]  = useState(null);
     const [open, setOpen] = useState(false);
     const axiosPublic = useAxiosPublic();
@@ -125,6 +126,7 @@ const AuthProvider = ({ children }) => {
 
     const userInfo = {
         user, loading,
+        search, setSearch,
         reviewData, setReviewData,
         open, setOpen,
         googleSignIn,
