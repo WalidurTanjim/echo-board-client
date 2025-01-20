@@ -32,7 +32,7 @@ function App() {
       {path: 'my-profile', element: <MyProfile />},
       {path: 'add-post', element: <AddPost />},
       {path: 'my-posts', element: <MyPosts />},
-      {path: 'post-reviews/:id', element: <PostReviews />}
+      {path: 'comments/:id', element: <PostReviews />}
     ]}
   ])
 

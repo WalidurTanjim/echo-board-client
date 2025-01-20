@@ -71,26 +71,26 @@ const MyProfile = () => {
                         <h1 className='text-gray-600 mb-2'>{user?.email}</h1>
 
                         <p className='text-slate-800 text-sm font-medium'>Badges:</p>
-                        <h1 className='text-gray-600 mb-2'>{loaded_user?.badge}</h1>
+                        <h1 className='text-gray-600 mb-2 capitalize'>{loaded_user?.badge}</h1>
                     </div>
+                </div>
 
-                    {/* author post */}
-                    <div className="author_post mt-5">
-                        <h1 className='text-xl font-medium text-slate-700'>My posts:</h1>
+                {/* author post */}
+                <div className="author_post mt-10">
+                    <h1 className='text-xl font-medium text-slate-700'>My posts:</h1>
 
-                        <div className='mt-3'>
-                            {
-                                isPending ? (
-                                    <Spinner />
-                                ) : isError ? (
-                                    <div className='py-12 flex items-center justify-center'>
-                                        <h1 className='text-xl font-medium text-red-600'>{error?.message}</h1>
-                                    </div>
-                                ) : (
-                                    author_post?.map(post => <Post key={post?._id} post={post} />)
-                                )
-                            }
-                        </div>
+                    <div className='mt-3'>
+                        {
+                            isPending ? (
+                                <Spinner />
+                            ) : isError ? (
+                                <div className='py-12 flex items-center justify-center'>
+                                    <h1 className='text-xl font-medium text-red-600'>{error?.message}</h1>
+                                </div>
+                            ) : (
+                                author_post?.map(post => <Post key={post?._id} post={post} />)
+                            )
+                        }
                     </div>
                 </div>
             </div>
