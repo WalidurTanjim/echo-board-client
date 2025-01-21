@@ -7,10 +7,11 @@ import { PencilSquareIcon, EnvelopeIcon, PencilIcon } from '@heroicons/react/24/
 
 
 import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import useAxiosPublic from '../../../../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
+import { useQuery } from '@tanstack/react-query';
 
 const AddPost = () => {
     const [file, setFile] = useState('');
@@ -23,6 +24,20 @@ const AddPost = () => {
 
     const { register, handleSubmit, watch, reset, setValue, formState: { errors }, } = useForm();
 
+
+    // get user-post-count
+    const { data: user_post_count = {}, isPending, isError, error, refetch} = useQuery({
+        queryKey: ['user_post_count', user?.email],
+        queryFn: async() => {
+            const res = await axiosPublic.get(`/user-post-count?email=${user?.email}`);
+            const data = await res?.data;
+            return data;
+        }
+        
+    })
+
+
+    // set value on the field
     useEffect(() => {
         if (user && user.email) {
             setValue("author.name", user.displayName); // Set name field
@@ -104,75 +119,86 @@ const AddPost = () => {
         <section className='add-post'>
             <DashboardRoutes />
             
-            <div className="container mx-auto px-6 py-14">
-                <SectionTitle title="Add New Post" sub_title="Create a New Discussion and Connect with the Community" />
+            {
+                user_post_count?.count < 5 ?
+                <div className="container mx-auto px-6 py-14">
+                    <SectionTitle title="Add New Post" sub_title="Create a New Discussion and Connect with the Community" />
 
-                <div className='w-full md:w-[650px] mx-auto'>
-                    <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-                        {/* author.image field */}
-                        <div className="relative flex items-center mt-8">
-                            <label htmlFor="file-input" className="sr-only">Choose file</label>
+                    <div className='w-full md:w-[650px] mx-auto'>
+                        <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+                            {/* author.image field */}
+                            <div className="relative flex items-center mt-8">
+                                <label htmlFor="file-input" className="sr-only">Choose file</label>
 
-                            <input type="file" name="file-input" id="file-input" className="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10  focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 file:bg-gray-50 file:border-0 file:me-4 file:py-3 file:px-4 dark:file:bg-neutral-700 dark:file:text-neutral-400" {...register("author.image", { required: true })} accept='image/png, image/jpg, image/jpeg' onChange={e => handleChange(e)} />
-                        </div>
+                                <input type="file" name="file-input" id="file-input" className="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10  focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 file:bg-gray-50 file:border-0 file:me-4 file:py-3 file:px-4 dark:file:bg-neutral-700 dark:file:text-neutral-400" {...register("author.image", { required: true })} accept='image/png, image/jpg, image/jpeg' onChange={e => handleChange(e)} />
+                            </div>
 
-                        {/* author.name field */}
-                        <div className="relative flex items-center mt-4">
-                            <span className="absolute">
-                                <PencilSquareIcon className="mx-3 size-5 text-gray-400" />
-                            </span>
+                            {/* author.name field */}
+                            <div className="relative flex items-center mt-4">
+                                <span className="absolute">
+                                    <PencilSquareIcon className="mx-3 size-5 text-gray-400" />
+                                </span>
 
-                            <input type="text" className="block w-full py-2 text-gray-700 bg-blue-50 border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 cursor-not-allowed" disabled={true} placeholder="Author Name" {...register("author.name", { required: true })} />
-                        </div>
+                                <input type="text" className="block w-full py-2 text-gray-700 bg-blue-50 border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 cursor-not-allowed" disabled={true} placeholder="Author Name" {...register("author.name", { required: true })} />
+                            </div>
 
-                        {/* author.email field */}
-                        <div className="relative flex items-center mt-4">
-                            <span className="absolute">
-                                <EnvelopeIcon className="mx-3 size-5 text-gray-400" />
-                            </span>
+                            {/* author.email field */}
+                            <div className="relative flex items-center mt-4">
+                                <span className="absolute">
+                                    <EnvelopeIcon className="mx-3 size-5 text-gray-400" />
+                                </span>
 
-                            <input type="email" className="block w-full py-2 text-gray-700 bg-blue-50 border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 cursor-not-allowed" disabled={true} placeholder="Author Email" {...register("author.email", { required: true })} />
-                        </div>
+                                <input type="email" className="block w-full py-2 text-gray-700 bg-blue-50 border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 cursor-not-allowed" disabled={true} placeholder="Author Email" {...register("author.email", { required: true })} />
+                            </div>
 
-                        {/* post.title field */}
-                        <div className="relative flex items-center mt-4">
-                            <span className="absolute">
-                                <PencilIcon className="mx-3 size-5 text-gray-400" />
-                            </span>
+                            {/* post.title field */}
+                            <div className="relative flex items-center mt-4">
+                                <span className="absolute">
+                                    <PencilIcon className="mx-3 size-5 text-gray-400" />
+                                </span>
 
-                            <input type="text" className="block w-full py-2 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Post Title" {...register("post.title", { required: true })} />
-                        </div>
+                                <input type="text" className="block w-full py-2 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Post Title" {...register("post.title", { required: true })} />
+                            </div>
 
-                        {/* post.tag field */}
-                        <div className="relative flex items-center mt-4">
-                            <select className="block w-full py-2 text-gray-700 bg-white border rounded-lg px-3 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" {...register("post.tags", { required: true })}>
-                                <option value="General Discussion">General Discussion</option>
-                                <option value="Web Development">Web Development</option>
-                                <option value="Health & Fitness">Health & Fitness</option>
-                                <option value="Travel">Travel</option>
-                                <option value="Career Advice">Career Advice</option>
-                                <option value="Movies">Movies</option>
-                                <option value="DIY & Crafts">DIY & Crafts</option>
-                                <option value="Cybersecurity">Cybersecurity</option>
-                                <option value="Music">Music</option>
-                                <option value="Bug Reports">Bug Reports</option>
-                                <option value="Parenting">Parenting</option>
-                                <option value="Photography">Photography</option>
-                                <option value="Sports">Sports</option>
-                                <option value="Feature Requests">Feature Requests</option>
-                            </select>
-                        </div>
+                            {/* post.tag field */}
+                            <div className="relative flex items-center mt-4">
+                                <select className="block w-full py-2 text-gray-700 bg-white border rounded-lg px-3 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" {...register("post.tags", { required: true })}>
+                                    <option value="General Discussion">General Discussion</option>
+                                    <option value="Web Development">Web Development</option>
+                                    <option value="Health & Fitness">Health & Fitness</option>
+                                    <option value="Travel">Travel</option>
+                                    <option value="Career Advice">Career Advice</option>
+                                    <option value="Movies">Movies</option>
+                                    <option value="DIY & Crafts">DIY & Crafts</option>
+                                    <option value="Cybersecurity">Cybersecurity</option>
+                                    <option value="Music">Music</option>
+                                    <option value="Bug Reports">Bug Reports</option>
+                                    <option value="Parenting">Parenting</option>
+                                    <option value="Photography">Photography</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Feature Requests">Feature Requests</option>
+                                </select>
+                            </div>
 
-                        {/* post.description field */}
-                        <div className="relative flex items-center mt-4">
-                            <textarea type="text" rows="3" className="block w-full py-2 text-gray-700 bg-white border rounded-lg px-3 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Write your post description here" {...register("post.description", { required: true })}></textarea>
-                        </div>
+                            {/* post.description field */}
+                            <div className="relative flex items-center mt-4">
+                                <textarea type="text" rows="3" className="block w-full py-2 text-gray-700 bg-white border rounded-lg px-3 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Write your post description here" {...register("post.description", { required: true })}></textarea>
+                            </div>
 
-                        {/* add post button */}
-                        <button className="w-full mt-4 px-6 py-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Add Post</button>
-                    </form>
+                            {/* add post button */}
+                            <button className="w-full mt-4 px-6 py-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Add Post</button>
+                        </form>
+                    </div>
+                </div> : 
+                <div className='container mx-auto px-6 w-full h-screen flex items-center justify-center'>
+                    <div className='text-center'>
+                        <h1 className="text-xl font-medium text-red-600 mb-3">You've reached the limit of 5 posts. Become a member to create more posts.</h1>
+                        <Link to="/membership">
+                            <button type="submit" className="py-2 px-6 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Become A Member</button>
+                        </Link>
+                    </div>
                 </div>
-            </div>
+            }
         </section>
     );
 };
