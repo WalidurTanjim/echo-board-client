@@ -100,7 +100,7 @@ const Navbar = () => {
                                     <p className="text-xs text-gray-600 p-2 border rounded-md bg-blue-100 cursor-not-allowed mb-1">{user?.displayName}</p>
                                     {
                                         isAdmin ?
-                                        <Link to='/dashboard/manage-users'>
+                                        <Link to='/dashboard/admin-profile'>
                                             <p className="text-xs text-gray-600 p-2 rounded-md hover:bg-gray-100 mb-1">Dashboard</p>
                                         </Link> :
                                         <Link to='/dashboard/my-profile'>

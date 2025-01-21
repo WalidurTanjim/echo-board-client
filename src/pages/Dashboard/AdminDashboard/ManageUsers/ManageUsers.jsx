@@ -62,11 +62,16 @@ const ManageUsers = () => {
                                                     <h1>{error?.message}</h1>
                                                 </div>
                                             ) : 
+                                            Array.isArray(users) ? 
                                             <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                                 {
                                                     users?.map(user => <UserRow key={user?._id} user={user} refetch={refetch} />)
                                                 }
-                                            </tbody>
+                                            </tbody> : (
+                                                <div className='py-14 flex items-center justify-center'>
+                                                    <h1 className='text-xl md:text-2xl font-medium text-slate-700'>No User Found</h1>
+                                                </div>
+                                            )
                                         }
                                     </table>
                                 </div>

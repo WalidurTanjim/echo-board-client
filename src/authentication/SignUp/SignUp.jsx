@@ -21,6 +21,7 @@ const SignUp = () => {
     const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm()
 
     const onSubmit = (data) => {
+        console.log(data);
         setErrMsg('');
 
         // validate password
@@ -32,7 +33,7 @@ const SignUp = () => {
         createUser(data.email, data.password)
         .then(result => {
             const user = result.user;
-            updateUserProfileHandler(user, data.fullname);
+            updateUserProfileHandler(user, data.fullname || user.displayName);
             navigate('/');
             reset();
             console.log("Sign up new user:", user);

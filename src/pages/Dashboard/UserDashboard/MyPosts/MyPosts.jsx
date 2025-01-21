@@ -84,14 +84,6 @@ const MyPosts = () => {
                                                     </button>
                                                 </th>
 
-                                                {/* <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                    <button className="flex items-center gap-x-2">
-                                                        <span>Role</span>
-                                                    </button>
-                                                </th>
-
-                                                <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Email address</th> */}
-
                                                 <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Actions</th>
                                             </tr>
                                         </thead>
@@ -140,9 +132,6 @@ const MyPosts = () => {
                                                                             </div>
                                                                         </div>
                                                                     </td>
-
-                                                                    {/* <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">Design Director</td>
-                                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">authurmelo@example.com</td> */}
 
                                                                     {/* action buttons (comment, delete) */}
                                                                     <td className="px-4 py-4 text-sm whitespace-nowrap">

@@ -67,22 +67,23 @@ const AuthProvider = ({ children }) => {
 
     // observer
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async currentUser => {
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             setUser(currentUser);
+            console.log("Current user:", currentUser)
 
             if(currentUser){
                 const userInfo = { email: currentUser?.email };
+                const dbUserInfo = {
+                    userName: currentUser?.displayName,
+                    userEmail: currentUser?.email,
+                    userPhoto: currentUser?.photoURL
+                }
 
                 try{
                     const res = await axiosPublic.post('/create-token', userInfo);
                     const data = await res?.data;
-                    
-                    if(data.success){
-                        const dbUserInfo = {
-                            userName: currentUser?.displayName,
-                            userEmail: currentUser?.email,
-                            userPhoto: currentUser?.photoURL
-                        }
+                    // if(data){
+                        
 
                         try{
                             const res = await axiosPublic.post('/users', dbUserInfo);
@@ -99,7 +100,7 @@ const AuthProvider = ({ children }) => {
                         }catch(err){
                             console.error(err);
                         }
-                    }
+                    // }
                 }catch(err){
                     console.error(err);
                 }

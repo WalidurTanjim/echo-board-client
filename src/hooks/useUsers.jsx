@@ -10,7 +10,7 @@ const useUsers = () => {
         queryFn: async() => {
             const res = await axiosSecure.get('/all-users');
             const data = await res?.data;
-            if(data) return data;
+            return data;
         }
     })
 

@@ -38,6 +38,38 @@ const UserRow = ({ user, refetch }) => {
         });
     }
 
+
+    // handleDeleteUser
+    const handleDeleteUser = async id => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't able to revert this user!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async(result) => {
+            if (result.isConfirmed) {
+                try{
+                    const res = await axiosSecure.delete(`/users/${id}`);
+                    const data = await res?.data;
+                    
+                    if(data.deletedCount > 0){
+                        Swal.fire({
+                            title: "Success!",
+                            text: "User has been deleted successfully",
+                            icon: "success"
+                        });
+                        refetch();
+                    }
+                }catch(err){
+                    console.error(err);
+                }
+            }
+        });
+    }
+
     return (
         <tr>
             <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -73,7 +105,7 @@ const UserRow = ({ user, refetch }) => {
                         <ShieldCheckIcon className='w-5 h-5' />
                     </button>
 
-                    <button className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
+                    <button className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none" onClick={() => handleDeleteUser(_id)}>
                         <TrashIcon className='w-5 h-5' />
                     </button>
 
