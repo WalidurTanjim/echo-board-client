@@ -24,6 +24,7 @@ const AdminProfile = () => {
     const axiosSecure = useAxiosSecure();
 
     const { comments, posts, users, isCommentsLoading, isPostsLoading, isUsersLoading, isError, error, refetchComments, refetchPosts, refetchUsers } = useMultipleData();
+    const { register, handleSubmit, watch, reset, setValue, formState: { errors }, } = useForm();
 
     // Check if data is loading
     const isLoading = isCommentsLoading || isPostsLoading || isUsersLoading;
@@ -44,7 +45,7 @@ const AdminProfile = () => {
         return <div className="text-center text-red-500">Error: {error?.message}</div>;
     }
 
-    const { register, handleSubmit, watch, reset, setValue, formState: { errors }, } = useForm();
+    // const { register, handleSubmit, watch, reset, setValue, formState: { errors }, } = useForm();
 
     // get signed in user by query email
     const { data: loaded_user = {} } = useQuery({
