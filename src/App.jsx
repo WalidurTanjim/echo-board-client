@@ -18,11 +18,13 @@ import ReportedComments from './pages/Dashboard/AdminDashboard/ReportedComments/
 import AllPosts from './pages/AllPosts/AllPosts'
 import AllAnnouncements from './pages/AllAnnouncements/AllAnnouncements'
 import AdminProfile from './pages/Dashboard/AdminDashboard/AdminProfile/AdminProfile'
+import Membership from './pages/Membership/Membership'
+import PrivateRoute from './PrivateRoute/PrivateRoute'
 
-function App() {
-  const routes = createBrowserRouter([
+function App() {const routes = createBrowserRouter([
     {path: '/', element: <MainLayout />, errorElement: <ErrorPage />, children: [
       {path: '/', element: <Home />},
+      {path: 'membership', element: <PrivateRoute><Membership /></PrivateRoute>},
       {path: 'all-posts', element: <AllPosts />},
       {path: 'all-announcements', element: <AllAnnouncements />},
       {path: 'post/:id', element: <PostDetails />},

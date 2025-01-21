@@ -28,11 +28,16 @@ const AuthProvider = ({ children }) => {
     };
 
     // updateUserProfile
-    const updateUserProfile = (user, fullname) => {
+    const updateUserProfile = async(user, fullname) => {
         setLoading(true);
-        return updateProfile(user, {
+        // return updateProfile(user, {
+        //     displayName: fullname
+        // });
+        await updateProfile(user, {
             displayName: fullname
         });
+        await user.reload();
+        return auth.currentUser
     };
 
     // verifyEmail
@@ -69,21 +74,21 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             setUser(currentUser);
+            currentUser ? currentUser.reload() : undefined;
             console.log("Current user:", currentUser)
 
             if(currentUser){
                 const userInfo = { email: currentUser?.email };
-                const dbUserInfo = {
-                    userName: currentUser?.displayName,
-                    userEmail: currentUser?.email,
-                    userPhoto: currentUser?.photoURL
-                }
 
                 try{
                     const res = await axiosPublic.post('/create-token', userInfo);
                     const data = await res?.data;
                     // if(data){
-                        
+                        const dbUserInfo = {
+                            userName: currentUser?.displayName,
+                            userEmail: currentUser?.email,
+                            userPhoto: currentUser?.photoURL
+                        }
 
                         try{
                             const res = await axiosPublic.post('/users', dbUserInfo);

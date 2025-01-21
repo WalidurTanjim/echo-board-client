@@ -33,7 +33,7 @@ const SignUp = () => {
         createUser(data.email, data.password)
         .then(result => {
             const user = result.user;
-            updateUserProfileHandler(user, data.fullname || user.displayName);
+            updateUserProfileHandler(user, data.fullname);
             navigate('/');
             reset();
             console.log("Sign up new user:", user);
