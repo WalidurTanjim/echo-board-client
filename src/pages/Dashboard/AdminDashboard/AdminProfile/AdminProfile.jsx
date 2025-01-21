@@ -9,6 +9,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2';
 import useAxiosPublic from '../../../../hooks/useAxiosPublic';
+import { ResponsiveContainer, Pie, PieChart } from 'recharts';
+import Spinner from '../../../../components/Spinner/Spinner';
 
 const AdminProfile = () => {
     const [file, setFile] = useState('');
@@ -23,19 +25,38 @@ const AdminProfile = () => {
 
     const { comments, posts, users, isCommentsLoading, isPostsLoading, isUsersLoading, isError, error, refetchComments, refetchPosts, refetchUsers } = useMultipleData();
 
+    // Check if data is loading
+    const isLoading = isCommentsLoading || isPostsLoading || isUsersLoading;
+
+    // Prepare data for the chart
+    const data = [
+        { name: 'Posts', value: posts?.count || 0 },
+        { name: 'Comments', value: comments?.count || 0 },
+        { name: 'Users', value: users?.count || 0 }
+    ];
+
+    // Render loading, error, or the chart
+    if (isLoading) {
+        return <Spinner />;
+    }
+
+    if (isError) {
+        return <div className="text-center text-red-500">Error: {error?.message}</div>;
+    }
+
     const { register, handleSubmit, watch, reset, setValue, formState: { errors }, } = useForm();
 
     // get signed in user by query email
     const { data: loaded_user = {} } = useQuery({
         queryKey: ['loaded_user', axiosSecure, user?.email],
-        queryFn: async() => {
+        queryFn: async () => {
             const res = await axiosSecure.get(`/users?email=${user?.email}`);
             const data = await res?.data;
-            if(data) return data;
+            if (data) return data;
         }
     })
 
-     // author image upload to cloudinary
+    // author image upload to cloudinary
     // previewFile
     const previewFile = file => {
         const reader = new FileReader();
@@ -53,30 +74,30 @@ const AdminProfile = () => {
         previewFile(logoFile);
     }
 
-    const onSubmit = async(data) => {
+    const onSubmit = async (data) => {
         setErrMsg('');
 
         const newData = data;
 
-        try{
+        try {
             // upload tag icon to cloudinary & get live link
             const res = await axiosPublic.post('/', {
                 company_logo: image
             });
 
             // console.log('tag icon live link from cloudinary:', res.data);
-            if(res?.data){
+            if (res?.data) {
                 const image_live_link = res?.data?.secure_url;
                 data.tag_icon = image_live_link;
             }
 
             // upload new post to db
-            const uploadData = async() => {
-                try{
+            const uploadData = async () => {
+                try {
                     const res = await axiosSecure.post('/tags', newData);
                     const data = await res.data;
-                    
-                    if(data?.insertedId){
+
+                    if (data?.insertedId) {
                         Swal.fire({
                             title: "Good job!",
                             text: "New tag added successfully!",
@@ -84,12 +105,12 @@ const AdminProfile = () => {
                         });
                         reset();
                     }
-                }catch(err){
+                } catch (err) {
                     console.error(err);
                 }
             };
             uploadData();
-        }catch(err){
+        } catch (err) {
             console.error(err);
         }
     }
@@ -110,11 +131,11 @@ const AdminProfile = () => {
                         {/* user profile picture div starts */}
                         <div className='flex justify-center mb-3'>
                             {
-                                user?.photoURL ? 
-                                <img src={user?.photoURL} alt="" className='w-[150px] h-[150px] rounded-full border-2' /> :
-                                <div className='w-[150px] h-[150px] rounded-full border-2 bg-purple-400 flex items-center justify-center'>
-                                    <h1 className='uppercase text-2xl font-medium'>{user?.displayName.charAt(0)}</h1>
-                                </div>
+                                user?.photoURL ?
+                                    <img src={user?.photoURL} alt="" className='w-[150px] h-[150px] rounded-full border-2' /> :
+                                    <div className='w-[150px] h-[150px] rounded-full border-2 bg-purple-400 flex items-center justify-center'>
+                                        <h1 className='uppercase text-2xl font-medium'>{user?.displayName.charAt(0)}</h1>
+                                    </div>
                             }
                         </div>
 
@@ -146,7 +167,7 @@ const AdminProfile = () => {
                 {/* card */}
                 <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-10">
                     {/* total posts */}
-                    <div className='post px-5 py-7 rounded-md border border-blue-200 flex justify-between'>
+                    <div className='post px-5 py-7 rounded-md border border-blue-200 bg-blue-50 flex justify-between'>
                         <DocumentTextIcon className='w-10 h-10 text-blue-500' />
 
                         <div>
@@ -156,7 +177,7 @@ const AdminProfile = () => {
                     </div>
 
                     {/* total comments */}
-                    <div className='post px-5 py-7 rounded-md border border-blue-200 flex justify-between'>
+                    <div className='post px-5 py-7 rounded-md border border-blue-200 bg-blue-50 flex justify-between'>
                         <ChatBubbleOvalLeftEllipsisIcon className='w-10 h-10 text-blue-500' />
 
                         <div>
@@ -166,7 +187,7 @@ const AdminProfile = () => {
                     </div>
 
                     {/* total users */}
-                    <div className='post px-5 py-7 rounded-md border border-blue-200 flex justify-between'>
+                    <div className='post px-5 py-7 rounded-md border border-blue-200 bg-blue-50 flex justify-between'>
                         <UserGroupIcon className='w-10 h-10 text-blue-500' />
 
                         <div>
@@ -175,6 +196,14 @@ const AdminProfile = () => {
                         </div>
                     </div>
                 </div>
+
+
+                {/* pie chart to show the number of posts, comments & users */}
+                <ResponsiveContainer  width="100%" height={300}>
+                    <PieChart>
+                        <Pie data={data}  dataKey="value"  nameKey="name"  cx="50%"  cy="50%"  innerRadius={60}  outerRadius={80}  fill="#82ca9d"  label />
+                    </PieChart>
+                </ResponsiveContainer>
 
 
                 {/* add tag */}
