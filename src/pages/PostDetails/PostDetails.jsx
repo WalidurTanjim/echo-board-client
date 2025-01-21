@@ -10,6 +10,7 @@ import moment from 'moment';
 import toast from 'react-hot-toast';
 import Spinner from '../../components/Spinner/Spinner';
 import Review from '../../components/Review/Review';
+import { FacebookShareButton, FacebookShareCount, FacebookIcon } from 'react-share';
 
 const PostDetails = () => {
     const [errMsg, setErrMsg] = useState('');
@@ -19,6 +20,9 @@ const PostDetails = () => {
     const location = useLocation();
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
+
+    const shareUrl = `http://localhost:5173/post/${id}`;
+    const title = 'Check out this amazing post!';
 
     // useForm of react-hook-form
     const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm()
@@ -160,9 +164,16 @@ const PostDetails = () => {
                     </div>
 
                     {/* share count */}
-                    <div className='flex items-center cursor-default'>
-                        <ShareIcon className="size-4 text-gray-400" />
-                        <span className='text-xs text-gray-500'>{post_details?.post?.upVoteIcon}</span>
+                    <div className='flex items-center cursor-default group'>
+                        {/* Facebook Share Button */}
+                        <FacebookShareButton url={shareUrl} quote={title} hashtag="#ReactShare">
+                            <FacebookIcon size={16} round />
+                        </FacebookShareButton>
+
+                        {/* Share Count */}
+                        <FacebookShareCount url={shareUrl}>
+                            {(count) => <span>{count || 0} shares</span>}
+                        </FacebookShareCount>
                     </div>
                 </div>
             </div>
