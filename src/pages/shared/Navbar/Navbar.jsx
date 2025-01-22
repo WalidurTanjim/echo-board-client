@@ -89,7 +89,25 @@ const Navbar = () => {
 
                     {
                         user?.photoURL ? 
-                        <img src={user?.photoURL} alt="" className='w-[30px] h-[30px] rounded-full border-2' /> :
+                        <div className='relative'>
+                            <img src={user?.photoURL} alt="" className='w-[30px] h-[30px] rounded-full border-2' onClick={() => setToggleLinks(!toggleLinks)} />
+                            {
+                                toggleLinks ? 
+                                <div className="absolute top-10 right-0 p-2 rounded-lg w-52 border bg-white z-50">
+                                    <p className="text-xs text-gray-600 p-2 border rounded-md bg-blue-100 cursor-not-allowed mb-1">{user?.displayName}</p>
+                                    {
+                                        isAdmin ?
+                                        <Link to='/dashboard/admin-profile'>
+                                            <p className="text-xs text-gray-600 p-2 rounded-md hover:bg-gray-100 mb-1">Dashboard</p>
+                                        </Link> :
+                                        <Link to='/dashboard/my-profile'>
+                                            <p className="text-xs text-gray-600 p-2 rounded-md hover:bg-gray-100 mb-1">Dashboard</p>
+                                        </Link>
+                                    }
+                                    <p className="text-xs text-gray-600 p-2 rounded-md cursor-pointer hover:bg-gray-100 mb-1" onClick={logOutHandler}>Sign Out</p>
+                                </div> : ''
+                            }
+                        </div> :
                         user?.displayName ? 
                         <div className='relative'>
                             <p className='uppercase font-medium w-[30px] h-[30px] rounded-full bg-purple-300 hover:bg-purple-400 active:bg-purple-300 border cursor-pointer flex items-center justify-center' onClick={() => setToggleLinks(!toggleLinks)}>{user?.displayName?.charAt(0)}</p>
