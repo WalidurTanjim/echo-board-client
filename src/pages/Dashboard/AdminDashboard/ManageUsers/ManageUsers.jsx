@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DashboardRoutes from '../../../../components/DashboardRoutes/DashboardRoutes';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import useUsers from '../../../../hooks/useUsers';
@@ -6,7 +6,13 @@ import Spinner from '../../../../components/Spinner/Spinner';
 import UserRow from '../../../../components/UserRow/UserRow';
 
 const ManageUsers = () => {
-    const [ users, isPending, isError, error, refetch ] = useUsers();
+    const [search, setSearch] = useState('');
+    const [ users, isPending, isError, error, refetch ] = useUsers(search);
+
+    // handleSearchChange
+    const handleSearchChange = e => {
+        setSearch(e.target.value);
+    }
 
     return (
         <section className='manage-users'>
@@ -22,6 +28,14 @@ const ManageUsers = () => {
 
                         <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{users.length > 0 ? users.length : 0} users</span>
                     </div>
+
+                    {/* find jobs form */}
+                    <form className='w-full my-7'>
+                        {/* job title field */}
+                        <div className="w-full space-y-3">
+                            <input type="text" className="py-3 px-4 mb-3 shadow-sm block w-full border border-gray-200 outline-none rounded-lg text-sm focus:border-blue-300 focus:ring-blue-300 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Search user by name" onChange={handleSearchChange} />
+                        </div>
+                    </form>
 
                     <div className="flex flex-col mt-6">
                         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
