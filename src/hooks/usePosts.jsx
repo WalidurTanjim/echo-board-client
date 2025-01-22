@@ -3,22 +3,21 @@ import React from 'react';
 import useAxiosPublic from './useAxiosPublic';
 import useAuth from './useAuth';
 
-const usePosts = () => {
+const usePosts = (currentPage, itemsPerPage) => {
     const { search } = useAuth();
     const axiosPublic = useAxiosPublic();
-
     const { data, isPending, isError, error, refetch } = useQuery({
         
-        queryKey: ['posts', search], 
+        queryKey: ['posts', search, currentPage, itemsPerPage], 
         queryFn: async() => {
-            const res = await axiosPublic.get(`/all-posts?search=${search}`);
+            const res = await axiosPublic.get(`/all-posts?search=${search}&page=${currentPage}&limit=${itemsPerPage}`);
             const data = await res?.data;
             
             // sort posts by newest to oldest
             const sortedPosts = data?.posts.sort((a, b) => {
                 const dateA = new Date(a.post.postTime);
                 const dateB = new Date(b.post.postTime);
-                return dateB - dateA; // Newest to oldest
+                return dateB - dateA;
             });
 
             return { sortedPosts, data };

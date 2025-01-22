@@ -5,10 +5,23 @@ import Spinner from '../../../components/Spinner/Spinner';
 import Post from '../../../components/Post/Post';
 import { Link } from 'react-router-dom';
 import { CalendarIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline'
+import useMultipleData from '../../../hooks/useMultipleData';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 
 const Posts = () => {
+    const { comments, posts: totalPosts, users, isCommentsLoading, isPostsLoading, isUsersLoading, isError: isAnyError, error: anyError, refetchComments, refetchPosts, refetchUsers } = useMultipleData();
+
     const [sortBy, setSortBy] = useState('newest');
-    const [posts, result, isPending, isError, error, refetch] = usePosts();
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 5;
+    const totalPostsCount = totalPosts?.count || 0;
+    const numberOfPages = Math.ceil(totalPostsCount / itemsPerPage);
+    const pages = [...Array(numberOfPages).keys()];
+    // console.log(totalPosts, currentPage)
+
+    // get all posts
+    const [posts, result, isPending, isError, error, refetch] = usePosts(currentPage, itemsPerPage);
+
 
     return (
         <section className='posts container mx-auto px-6 py-14'>
@@ -46,10 +59,12 @@ const Posts = () => {
                     )
                 }
 
-                <div className="flex justify-center pt-5">
-                    <Link to="/all-posts">
-                        <button type="submit" className="py-2 px-6 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Show More</button>
-                    </Link>
+                <div className="flex items-center justify-center pt-5">
+                    <button className='flex items-center py-1 px-3 mx-1 text-slate-700 hover:bg-gray-100 active:bg-transparent border rounded-md' onClick={() => setCurrentPage(currentPage > 0 ? currentPage - 1 : currentPage)}><ArrowLeftIcon className='w-6 h-4 me-1' />Prev</button>
+                    {
+                        pages?.map((page, idx) => <button key={idx} className={`flex items-center py-1 px-3 mx-1 text-slate-700 hover:bg-gray-100 active:bg-transparent border rounded-md ${currentPage === page ? 'bg-blue-200 border-blue-300' : ''}`} onClick={() => setCurrentPage(page)}>{page}</button>)
+                    }
+                    <button className='flex items-center py-1 px-3 mx-1 text-slate-700 hover:bg-gray-100 active:bg-transparent border rounded-md' onClick={() => setCurrentPage(currentPage < pages?.length - 1 ? currentPage + 1 : currentPage)}>Next<ArrowRightIcon className='w-6 h-4 ms-1' /></button>
                 </div>
             </div>
         </section>
