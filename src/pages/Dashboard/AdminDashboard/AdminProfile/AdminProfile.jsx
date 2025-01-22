@@ -23,6 +23,16 @@ const AdminProfile = () => {
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
 
+    // get signed in user by query email
+    const { data: loaded_user = {} } = useQuery({
+        queryKey: ['loaded_user', axiosSecure, user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users?email=${user?.email}`);
+            const data = await res?.data;
+            if (data) return data;
+        }
+    })
+
     const { comments, posts, users, isCommentsLoading, isPostsLoading, isUsersLoading, isError, error, refetchComments, refetchPosts, refetchUsers } = useMultipleData();
     const { register, handleSubmit, watch, reset, setValue, formState: { errors }, } = useForm();
 
@@ -44,18 +54,6 @@ const AdminProfile = () => {
     if (isError) {
         return <div className="text-center text-red-500">Error: {error?.message}</div>;
     }
-
-    // const { register, handleSubmit, watch, reset, setValue, formState: { errors }, } = useForm();
-
-    // get signed in user by query email
-    const { data: loaded_user = {} } = useQuery({
-        queryKey: ['loaded_user', axiosSecure, user?.email],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/users?email=${user?.email}`);
-            const data = await res?.data;
-            if (data) return data;
-        }
-    })
 
     // author image upload to cloudinary
     // previewFile
@@ -182,7 +180,7 @@ const AdminProfile = () => {
                         <ChatBubbleOvalLeftEllipsisIcon className='w-10 h-10 text-blue-500' />
 
                         <div>
-                            <h3 className='text-sm font-medium text-slate-700'>Total Posts:</h3>
+                            <h3 className='text-sm font-medium text-slate-700'>Total Comments:</h3>
                             <h1 className='text-right text-2xl md:text-3xl font-medium text-blue-600'>{comments.count > 0 ? comments.count : 0}</h1>
                         </div>
                     </div>
@@ -192,7 +190,7 @@ const AdminProfile = () => {
                         <UserGroupIcon className='w-10 h-10 text-blue-500' />
 
                         <div>
-                            <h3 className='text-sm font-medium text-slate-700'>Total Posts:</h3>
+                            <h3 className='text-sm font-medium text-slate-700'>Total Users:</h3>
                             <h1 className='text-right text-2xl md:text-3xl font-medium text-blue-600'>{users.count > 0 ? users.count : 0}</h1>
                         </div>
                     </div>
