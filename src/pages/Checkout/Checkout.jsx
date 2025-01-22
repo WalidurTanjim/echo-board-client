@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import moment from 'moment';
 
 const Checkout = ({ totalPayment }) => {
     const [errMsg, setErrMsg] = useState('');
@@ -77,6 +78,27 @@ const Checkout = ({ totalPayment }) => {
                     text: `${user?.displayName} become GOLD badge user`,
                     icon: "success"
                 });
+
+                // user payment info
+                const userPaymentInfo = {
+                    userName: user?.displayName,
+                    userEmail: user?.email,
+                    amount: totalPayment,
+                    currency: "usd",
+                    paymentDate: moment().format('YYYY-MM-DD'),
+                    transactionId: paymentIntent?.id
+                };
+
+                const postPaymentInfo = async() => {
+                    try{
+                        const res = await axiosSecure.post(`/payments?email=${user?.email}`, userPaymentInfo);
+                        const data = await res?.data;
+                        console.log('Payment info set to the db:', data);
+                    }catch(err){
+                        console.error(err);
+                    }
+                };
+                postPaymentInfo();
             }
         }
 
