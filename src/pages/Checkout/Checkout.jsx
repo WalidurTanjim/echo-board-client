@@ -93,7 +93,7 @@ const Checkout = ({ totalPayment }) => {
                     try{
                         const res = await axiosSecure.post(`/payments?email=${user?.email}`, userPaymentInfo);
                         const data = await res?.data;
-                        console.log('Payment info set to the db:', data);
+                        // console.log('Payment info set to the db:', data);
                     }catch(err){
                         console.error(err);
                     }

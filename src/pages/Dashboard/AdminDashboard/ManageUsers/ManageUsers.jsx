@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DashboardRoutes from '../../../../components/DashboardRoutes/DashboardRoutes';
 import SectionTitle from '../../../../components/SectionTitle/SectionTitle';
 import useUsers from '../../../../hooks/useUsers';
 import Spinner from '../../../../components/Spinner/Spinner';
 import UserRow from '../../../../components/UserRow/UserRow';
+import useMultipleData from '../../../../hooks/useMultipleData';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 
 const ManageUsers = () => {
     const [search, setSearch] = useState('');
-    const [ users, isPending, isError, error, refetch ] = useUsers(search);
+    const [totalUsersCount, setTotalUsersCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 10;
+    const numberOfPages = totalUsersCount > 0 ? Math.ceil(totalUsersCount / itemsPerPage) : 0;
+    const pages = [...Array(numberOfPages).keys()];
+    // console.log(totalUsersCount, numberOfPages, pages);
+
+    const [ users, isPending, isError, error, refetch ] = useUsers(search, currentPage, itemsPerPage);
+    const { comments, posts, users: allUsers, isCommentsLoading, isPostsLoading, isUsersLoading, isError: isErrorAll, error: errorAll, refetchComments, refetchPosts, refetchUsers } = useMultipleData();
+    
+    useEffect(() => {
+        setTotalUsersCount(allUsers?.count);
+    }, [allUsers?.count]);
+
 
     // handleSearchChange
     const handleSearchChange = e => {
@@ -91,6 +106,15 @@ const ManageUsers = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    {/* pagination div starts */}
+                    <div className="flex flex-wrap items-center justify-center pt-5">
+                        <button className='flex items-center py-1 px-3 mx-1 text-slate-700 hover:bg-gray-100 active:bg-transparent border rounded-md' onClick={() => setCurrentPage(currentPage > 0 ? currentPage - 1 : currentPage)}><ArrowLeftIcon className='w-6 h-4 me-1' />Prev</button>
+                        {
+                            pages?.map((page, idx) => <button key={idx} className={`flex items-center py-1 px-3 mx-1 text-slate-700 hover:bg-gray-100 active:bg-transparent border rounded-md ${currentPage === page ? 'bg-blue-200 border-blue-300' : ''}`} onClick={() => setCurrentPage(page)}>{page}</button>)
+                        }
+                        <button className='flex items-center py-1 px-3 mx-1 text-slate-700 hover:bg-gray-100 active:bg-transparent border rounded-md' onClick={() => setCurrentPage(currentPage < pages?.length - 1 ? currentPage + 1 : currentPage)}>Next<ArrowRightIcon className='w-6 h-4 ms-1' /></button>
                     </div>
                 </section>
             </div>
