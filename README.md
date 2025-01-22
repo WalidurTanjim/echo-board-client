@@ -6,6 +6,11 @@
 
 With a clean and modern UI powered by **React** and **Tailwind CSS**, **EchoBoard** offers a seamless user experience on both desktop and mobile devices.
 
+## Live Demo
+
+Check out the live demo of **EchoBoard**: [https://your-live-website-link.com](https://your-live-website-link.com)
+
+
 ### Features
 
 #### 1. **User Authentication & Authorization**
