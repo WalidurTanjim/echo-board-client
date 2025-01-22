@@ -59,7 +59,7 @@ const Posts = () => {
                     )
                 }
 
-                <div className="flex items-center justify-center pt-5">
+                <div className="flex flex-wrap items-center justify-center pt-5">
                     <button className='flex items-center py-1 px-3 mx-1 text-slate-700 hover:bg-gray-100 active:bg-transparent border rounded-md' onClick={() => setCurrentPage(currentPage > 0 ? currentPage - 1 : currentPage)}><ArrowLeftIcon className='w-6 h-4 me-1' />Prev</button>
                     {
                         pages?.map((page, idx) => <button key={idx} className={`flex items-center py-1 px-3 mx-1 text-slate-700 hover:bg-gray-100 active:bg-transparent border rounded-md ${currentPage === page ? 'bg-blue-200 border-blue-300' : ''}`} onClick={() => setCurrentPage(page)}>{page}</button>)

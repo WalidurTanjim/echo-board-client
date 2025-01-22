@@ -1,40 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DashboardRoutes from '../../../../components/DashboardRoutes/DashboardRoutes';
 import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../../../../components/Spinner/Spinner';
 import Post from '../../../../components/Post/Post';
+import useAxiosPublic from '../../../../hooks/useAxiosPublic';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 
 const MyProfile = () => {
+    const [totalPostsCount, setTotalPostsCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 3;
+    const numberOfPages = Math.ceil(totalPostsCount / itemsPerPage);
+    const pages = [...Array(numberOfPages).keys()];
+
     const { user } = useAuth();
+    const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
 
     // get signed in user by query email
     const { data: loaded_user = {} } = useQuery({
         queryKey: ['loaded_user', axiosSecure, user?.email],
-        queryFn: async() => {
+        queryFn: async () => {
             const res = await axiosSecure.get(`/users?email=${user?.email}`);
             const data = await res?.data;
-            if(data) return data;
+            if (data) return data;
         }
     })
 
     // get post based on signed in user email
     const { data: author_post = [], isPending, isError, error, refetch } = useQuery({
-        queryKey: ['author_post', axiosSecure, user?.email],
-        queryFn: async() => {
-            const res = await axiosSecure.get(`/posts?email=${user?.email}`);
+        queryKey: ['author_post', axiosSecure, user?.email, currentPage, itemsPerPage],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/posts?email=${user?.email}&page=${currentPage}&limit=${itemsPerPage}`);
             const data = await res?.data;
-            
-            if(data) return data;
+
+            if (data) return data;
         }
+    })
+
+    // get user-post-count
+    const { data: user_post_count = {}, isPending: isPendingUserPostCount, isError: isErrorUserPostCount, error: errorUserPostCount, refetch: refetchUserPostCount } = useQuery({
+        queryKey: ['user_post_count', user?.email],
+        queryFn: async () => {
+            const res = await axiosPublic.get(`/user-post-count?email=${user?.email}`);
+            const data = await res?.data;
+            setTotalPostsCount(data?.count);
+            return data;
+        }
+
     })
 
     return (
         <section className='my-profile'>
             <DashboardRoutes />
-            
+
             <div className="container mx-auto px-6 py-14">
                 {/* user profile related info */}
                 <div className='grid gap-5 grid-cols-1 md:grid-cols-2'>
@@ -43,11 +64,11 @@ const MyProfile = () => {
                         {/* user profile picture div starts */}
                         <div className='flex justify-center mb-3'>
                             {
-                                user?.photoURL ? 
-                                <img src={user?.photoURL} alt="" className='w-[150px] h-[150px] rounded-full border-2' /> :
-                                <div className='w-[150px] h-[150px] rounded-full border-2 bg-purple-400 flex items-center justify-center'>
-                                    <h1 className='uppercase text-2xl font-medium'>{user?.displayName.charAt(0)}</h1>
-                                </div>
+                                user?.photoURL ?
+                                    <img src={user?.photoURL} alt="" className='w-[150px] h-[150px] rounded-full border-2' /> :
+                                    <div className='w-[150px] h-[150px] rounded-full border-2 bg-purple-400 flex items-center justify-center'>
+                                        <h1 className='uppercase text-2xl font-medium'>{user?.displayName.charAt(0)}</h1>
+                                    </div>
                             }
                         </div>
 
@@ -92,6 +113,14 @@ const MyProfile = () => {
                             )
                         }
                     </div>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-center pt-5">
+                    <button className='flex items-center py-1 px-3 mx-1 text-slate-700 hover:bg-gray-100 active:bg-transparent border rounded-md' onClick={() => setCurrentPage(currentPage > 0 ? currentPage - 1 : currentPage)}><ArrowLeftIcon className='w-6 h-4 me-1' />Prev</button>
+                    {
+                        pages?.map((page, idx) => <button key={idx} className={`flex items-center py-1 px-3 mx-1 text-slate-700 hover:bg-gray-100 active:bg-transparent border rounded-md ${currentPage === page ? 'bg-blue-200 border-blue-300' : ''}`} onClick={() => setCurrentPage(page)}>{page}</button>)
+                    }
+                    <button className='flex items-center py-1 px-3 mx-1 text-slate-700 hover:bg-gray-100 active:bg-transparent border rounded-md' onClick={() => setCurrentPage(currentPage < pages?.length - 1 ? currentPage + 1 : currentPage)}>Next<ArrowRightIcon className='w-6 h-4 ms-1' /></button>
                 </div>
             </div>
         </section>
