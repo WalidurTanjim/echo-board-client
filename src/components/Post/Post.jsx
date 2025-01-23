@@ -3,7 +3,7 @@ import { ChevronDoubleUpIcon, ChevronDoubleDownIcon, ChatBubbleOvalLeftEllipsisI
 import { Link } from 'react-router-dom';
 
 const Post = ({ post }) => {
-    const { _id, author, post: userPost } = post;
+    const { _id, author, post: userPost, reviewCount } = post;
 
     return (
         <Link to={`/post/${_id}`}>
@@ -48,7 +48,7 @@ const Post = ({ post }) => {
                     {/* comment count */}
                     <div className='flex items-center cursor-default'>
                         <ChatBubbleOvalLeftEllipsisIcon className="size-4 text-gray-400" />
-                        <span className='text-xs text-gray-500'>{userPost?.upVoteIcon}</span>
+                        <span className='text-xs text-gray-500'>{reviewCount ? reviewCount : 0}</span>
                     </div>
 
                     {/* share count */}
