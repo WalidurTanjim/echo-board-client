@@ -88,7 +88,7 @@ const ManageUsers = () => {
                                                 <Spinner />
                                             ) : isError ? (
                                                 <div className='w-full py-14 flex items-center justify-center'>
-                                                    <h1>{error?.message}</h1>
+                                                    <h1 className="text-center text-xl font-medium text-red-600">{error?.message}</h1>
                                                 </div>
                                             ) : 
                                             Array.isArray(users) ? 

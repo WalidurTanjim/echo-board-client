@@ -99,7 +99,7 @@ const MyPosts = () => {
                                                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                                     {
                                                         my_posts?.map(my_post => {
-                                                            const { _id, author, post } = my_post;
+                                                            const { _id, author, post, reviewCount } = my_post;
 
                                                             return (
                                                                 <tr key={my_post?._id}>
@@ -137,10 +137,11 @@ const MyPosts = () => {
                                                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                                         <div className="flex items-center gap-x-6">
                                                                             {/* comment button */}
-                                                                            <Link to={`/dashboard/comments/${_id}`}>
+                                                                            <Link to={`/dashboard/comments/${_id}`} className='flex items-center gap-1 text-gray-1'>
                                                                                 <button className="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
                                                                                     <ChatBubbleOvalLeftEllipsisIcon className='w-5 h-5' />
                                                                                 </button>
+                                                                                <span className='text-gray-500'>{reviewCount ? reviewCount : 0}</span>
                                                                             </Link>
 
                                                                             {/* delete button */}
