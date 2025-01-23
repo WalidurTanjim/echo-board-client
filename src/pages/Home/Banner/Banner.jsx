@@ -27,14 +27,11 @@ const Banner = () => {
                         <div className="w-full space-y-3">
                             <input type="text" className="py-3 px-4 mb-3 shadow-sm block w-full border border-gray-200 outline-none rounded-lg text-sm focus:border-blue-300 focus:ring-blue-300 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Search post by tag" onChange={handleSearchChange} />
                         </div>
-
-                        {/* find jobs button */}
-                        {/* <button type="submit" className="py-2 px-4 w-full inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Find Post</button> */}
                     </form>
 
                     <p className='text-gray-500 text-xs'>
-                        <span className='font-medium text-gray-600'>Popular Searches : </span>
-                        Movies, Music, Travel, Career Advice, Sports
+                        <span className='font-medium text-slate-600'>Popular Searches : </span>
+                        <span className='text-blue-600 uppercase font-semibold'>"general discussion, web development, diy & crafts"</span>
                     </p>
                 </div>
             </div>
