@@ -4,24 +4,47 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import useAuth from '../../../../hooks/useAuth';
 import Spinner from '../../../../components/Spinner/Spinner';
-import { ChevronDoubleUpIcon, ChevronDoubleDownIcon, ChatBubbleOvalLeftEllipsisIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { ChevronDoubleUpIcon, ChevronDoubleDownIcon, ChatBubbleOvalLeftEllipsisIcon, TrashIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import useAxiosPublic from '../../../../hooks/useAxiosPublic';
 
 const MyPosts = () => {
+    const [totalPostsCount, setTotalPostsCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 3;
+    const numberOfPages = Math.ceil(totalPostsCount / itemsPerPage);
+    const pages = [...Array(numberOfPages).keys()];
+
+
     const { user } = useAuth();
+    const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
+
     const { data: my_posts = [], isPending, isError, error, refetch } = useQuery({
-        queryKey: ['my_posts', axiosSecure, user?.email],
+        queryKey: ['my_posts', axiosSecure, user?.email, currentPage, itemsPerPage],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/posts?email=${user?.email}`);
+            const res = await axiosSecure.get(`/posts?email=${user?.email}&page=${currentPage}&limit=${itemsPerPage}`);
             const data = await res?.data;
             return data;
         }
     })
 
+    // get user-post-count
+    const { data: user_post_count = {}, isPending: isPendingUserPostCount, isError: isErrorUserPostCount, error: errorUserPostCount, refetch: refetchUserPostCount } = useQuery({
+        queryKey: ['user_post_count', user?.email],
+        queryFn: async () => {
+            const res = await axiosPublic.get(`/user-post-count?email=${user?.email}`);
+            const data = await res?.data;
+            setTotalPostsCount(data?.count);
+            return data;
+        }
+
+    })
+
     // handleDelete
-    const handleDelete = async(id) => {
+    const handleDelete = async (id) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -30,13 +53,13 @@ const MyPosts = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-        }).then(async(result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                try{
+                try {
                     const res = await axiosSecure.delete(`/posts/${id}`);
                     const data = res?.data;
 
-                    if(data.deletedCount > 0){
+                    if (data.deletedCount > 0) {
                         Swal.fire({
                             title: "Deleted!",
                             text: "Your post has been deleted.",
@@ -44,11 +67,11 @@ const MyPosts = () => {
                         });
                         refetch();
                     }
-                }catch(err){
+                } catch (err) {
                     console.error(err);
                 }
             }
-          });
+        });
     }
 
     return (
@@ -162,6 +185,14 @@ const MyPosts = () => {
                         </div>
                     </div>
                 </section>
+
+                <div className="flex flex-wrap items-center justify-center pt-5">
+                    <button className='flex items-center py-1 px-3 mx-1 text-slate-700 hover:bg-gray-100 active:bg-transparent border rounded-md' onClick={() => setCurrentPage(currentPage > 0 ? currentPage - 1 : currentPage)}><ArrowLeftIcon className='w-6 h-4 me-1' />Prev</button>
+                    {
+                        pages?.map((page, idx) => <button key={idx} className={`flex items-center py-1 px-3 mx-1 text-slate-700 hover:bg-gray-100 active:bg-transparent border rounded-md ${currentPage === page ? 'bg-blue-200 border-blue-300' : ''}`} onClick={() => setCurrentPage(page)}>{page}</button>)
+                    }
+                    <button className='flex items-center py-1 px-3 mx-1 text-slate-700 hover:bg-gray-100 active:bg-transparent border rounded-md' onClick={() => setCurrentPage(currentPage < pages?.length - 1 ? currentPage + 1 : currentPage)}>Next<ArrowRightIcon className='w-6 h-4 ms-1' /></button>
+                </div>
             </div>
         </section>
     );
