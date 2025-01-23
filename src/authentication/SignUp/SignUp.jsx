@@ -6,8 +6,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import GoogleSignIn from '../../components/GoogleSignIn/GoogleSignIn';
 import { PencilSquareIcon, EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import useAuth from '../../hooks/useAuth';
+import ButtonSpinner from '../../ButtonSpinner/ButtonSpinner';
 
 const SignUp = () => {
+    const [loading, setLoading] = useState(false);
     const [errMsg, setErrMsg] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [passwordErrMsg, setPasswordErrMsg] = useState('');
@@ -21,7 +23,7 @@ const SignUp = () => {
     const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm()
 
     const onSubmit = (data) => {
-        console.log(data);
+        setLoading(true);
         setErrMsg('');
 
         // validate password
@@ -34,6 +36,7 @@ const SignUp = () => {
         .then(result => {
             const user = result.user;
             updateUserProfileHandler(user, data.fullname);
+            setLoading(false);
             navigate('/');
             reset();
             console.log("Sign up new user:", user);
@@ -110,7 +113,7 @@ const SignUp = () => {
 
                         {/* buttons */}
                         <div className="mt-4">
-                            <button className="w-full px-6 py-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Sign up</button>
+                            <button className="w-full px-6 py-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">{ loading ? <ButtonSpinner /> : "Sign Up" }</button>
 
                             <p className="mt-4 text-center text-gray-600 dark:text-gray-400">or sign up with</p>
 

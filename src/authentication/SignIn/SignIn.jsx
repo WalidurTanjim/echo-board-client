@@ -6,8 +6,10 @@ import GoogleSignIn from '../../components/GoogleSignIn/GoogleSignIn';
 import { useForm } from "react-hook-form";
 import { EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import useAuth from '../../hooks/useAuth';
+import ButtonSpinner from '../../ButtonSpinner/ButtonSpinner';
 
 const SignIn = () => {
+    const [loading, setLoading] = useState(false);
     const [errMsg, setErrMsg] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
@@ -20,11 +22,13 @@ const SignIn = () => {
     const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm()
 
     const onSubmit = (data) => {
+        setLoading(true);
         setErrMsg('');
 
         // signInUser
         signInUser(data.email, data.password)
         .then(result => {
+            setLoading(false);
             const user = result.user;
             navigate(triggeredLocation || '/');
             reset();
@@ -82,7 +86,7 @@ const SignIn = () => {
 
                         {/* buttons */}
                         <div className="mt-4">
-                            <button className="w-full px-6 py-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Sign in</button>
+                            <button className="w-full px-6 py-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">{ loading ? <ButtonSpinner /> : "Sing In" }</button>
 
                             <p className="mt-4 text-center text-gray-600 dark:text-gray-400">or sign in with</p>
 
