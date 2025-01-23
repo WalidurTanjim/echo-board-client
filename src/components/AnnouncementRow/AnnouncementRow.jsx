@@ -4,7 +4,7 @@ const AnnouncementRow = ({ announcement }) => {
     const { _id, announcementDescription, authorName, authorImage, postTime, title } = announcement;
 
     return (
-        <div className='announcement p-2 rounded-md border hover:border-blue-200 group'>
+        <div className='announcement p-2 mb-5 rounded-md border hover:border-blue-200 hover:shadow-md group'>
             {/* author info div starts */}
             <div className="flex gap-2">
                 <img src={authorImage} alt="" className='w-[40px] h-[37px] rounded-md' />

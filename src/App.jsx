@@ -39,10 +39,10 @@ function App() {const routes = createBrowserRouter([
       {path: 'make-announcement', element: <AdminRoute><Announcement /></AdminRoute>},
 
       // users dashboard
-      {path: 'my-profile', element: <MyProfile />},
-      {path: 'add-post', element: <AddPost />},
-      {path: 'my-posts', element: <MyPosts />},
-      {path: 'comments/:id', element: <PostReviews />}
+      {path: 'my-profile', element: <PrivateRoute><MyProfile /></PrivateRoute>},
+      {path: 'add-post', element: <PrivateRoute><AddPost /></PrivateRoute>},
+      {path: 'my-posts', element: <PrivateRoute><MyPosts /></PrivateRoute>},
+      {path: 'comments/:id', element: <PrivateRoute><PostReviews /></PrivateRoute>}
     ]}
   ])
 
