@@ -9,8 +9,10 @@ import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { PencilSquareIcon, EnvelopeIcon, PencilIcon } from '@heroicons/react/24/outline';
 import moment from 'moment';
 import Swal from 'sweetalert2';
+import ButtonSpinner from '../../../../ButtonSpinner/ButtonSpinner';
 
 const Announcement = () => {
+    const [loading, setLoading] = useState(false);
     const [file, setFile] = useState('');
     const [image, setImage] = useState('');
     const [errMsg, setErrMsg] = useState('');
@@ -47,6 +49,7 @@ const Announcement = () => {
 
     const onSubmit = async(data) => {
         setErrMsg('');
+        setLoading(true);
         data.postTime = moment().format('YYYY-MM-DD');
         const newData = data;
 
@@ -68,6 +71,7 @@ const Announcement = () => {
                     const data = await res.data;
                     
                     if(data?.insertedId){
+                        setLoading(false);
                         Swal.fire({
                             title: "Good job!",
                             text: "Announcement added successfully!",
@@ -125,7 +129,7 @@ const Announcement = () => {
                         </div>
 
                         {/* make announcement button */}
-                        <button className="w-full mt-4 px-6 py-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Make Announcement</button>
+                        <button className="w-full mt-4 px-6 py-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20" disabled={loading}>{ loading ? <ButtonSpinner /> : 'Make Announcement' }</button>
                     </form>
                 </div>
             </div>
