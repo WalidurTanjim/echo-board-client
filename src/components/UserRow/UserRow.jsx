@@ -87,15 +87,20 @@ const UserRow = ({ user, refetch }) => {
                 {
                     role === 'admin' ? 
                     <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 border border-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
-                        <h2 className="text-xs font-normal text-emerald-500">{role ? role : 'None'}</h2>
+                        <h2 className="text-xs font-normal text-emerald-500">{role}</h2>
                     </div> : 
                     <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-50 dark:bg-gray-800 border border-slate-300">
-                        <h2 className="text-xs font-normal text-slate-600">{role ? role : 'None'}</h2>
+                        <h2 className="text-xs font-normal text-slate-600">{role}</h2>
                     </div>
                 }
             </td>
 
-            <td className="px-4 py-4 text-xs text-gray-500 dark:text-gray-300 capitalize whitespace-nowrap">{ badge ? badge : 'None'}</td>
+            {
+                badge === 'gold' ?
+                <td className="px-4 py-4 text-xs text-yellow-600 dark:text-yellow-300 capitalize whitespace-nowrap"><span className='px-3 rounded-full bg-yellow-50 border border-yellow-300'>{badge}</span></td> :
+                <td className="px-4 py-4 text-xs text-pink-500 dark:text-pink-300 capitalize whitespace-nowrap"><span className='px-3 rounded-full bg-pink-50 border border-pink-300'>{badge}</span></td>
+            }
+
             <td className="px-4 py-4 text-xs text-gray-500 dark:text-gray-300 whitespace-nowrap">{userEmail}</td>
 
             {/* buttons td */}
