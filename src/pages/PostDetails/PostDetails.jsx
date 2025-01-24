@@ -183,7 +183,9 @@ const PostDetails = () => {
                 <h1 className='text-lg font-medium text-slate-800'>Add a review</h1>
 
                 <form className='mt-3' onSubmit={handleSubmit(onSubmit)}>
-                    <textarea name="" rows="3" className='block w-full py-3 text-sm text-gray-700 bg-white border rounded-lg px-3 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40' placeholder='Add a review' {...register("review", { required: true })} />
+                    <textarea name="" rows="3" className='block w-full py-3 text-sm text-gray-700 bg-white border rounded-lg px-3 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40' placeholder='Add a review' {...register("review", { required: true, minLength: { value: 20, message: "Minimum length is 20 characters" }, })} />
+
+                    {errors.review && <p className="error text-xs text-red-600 font-medium mt-2 ms-1">{errors.review.message}</p>}
 
                     {errMsg ? <p className='text-xs text-red-600 font-medium mt-2 ms-1'>{errMsg}</p> : undefined}
 
