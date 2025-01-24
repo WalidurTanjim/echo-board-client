@@ -14,8 +14,8 @@ const Home = () => {
                 <Banner />
             </div>
             <Tags />
-            <Posts />
             { announcements.length > 0 ? <Announcements /> : undefined }
+            <Posts />
         </section>
     );
 };

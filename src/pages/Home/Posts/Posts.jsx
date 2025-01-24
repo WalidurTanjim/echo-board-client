@@ -20,7 +20,7 @@ const Posts = () => {
     // console.log(totalPosts, currentPage)
 
     // get all posts
-    const [posts, result, isPending, isError, error, refetch] = usePosts(currentPage, itemsPerPage);
+    const [posts, result, isPending, isError, error, refetch] = usePosts(currentPage, itemsPerPage, sortBy);
 
 
     return (

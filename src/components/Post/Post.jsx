@@ -54,7 +54,7 @@ const Post = ({ post }) => {
                     {/* share count */}
                     <div className='flex items-center cursor-default'>
                         <ShareIcon className="size-4 text-gray-400" />
-                        <span className='text-xs text-gray-500'>{userPost?.upVoteIcon}</span>
+                        <span className='text-xs text-gray-500'>0</span>
                     </div>
                 </div>
             </div>
