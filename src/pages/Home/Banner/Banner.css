@@ -84,3 +84,27 @@
 .animate-up-down-again {
     animation: moveUpDownAgain 2s infinite ease-in-out;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+@keyframes scaleBounce {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+  
+  .animate-scaleBounce {
+    animation: scaleBounce 1.5s infinite;
+  }

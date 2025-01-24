@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import banner_men from '../../../assets/banner/banner_men.webp'
+import frm_bnr from "../../../assets/banner/frm_bnr.png"
 import spread from '../../../assets/banner/spread.png'
 import suitcase from '../../../assets/banner/suitcase.png'
 import upload from '../../../assets/banner/upload.png'
@@ -38,7 +39,7 @@ const Banner = () => {
 
             <div className='imageDiv relative hidden lg:grid lg:col-span-2'>
                 {/* banner image */}
-                <img src={banner_men} alt="" className='w-full h-[400px]' />
+                <img src={frm_bnr} alt="" className='w-full h-[400px] animate-scaleBounce' />
 
                 {/* envelope */}
                 <div className='absolute left-0 top-0 flex items-center gap-2 ps-2 pe-4 py-2 rounded-md bg-white animate-left-right'>
