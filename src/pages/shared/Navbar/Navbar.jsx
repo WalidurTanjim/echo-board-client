@@ -10,7 +10,7 @@ const Navbar = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
     const [toggleLinks, setToggleLinks] = useState(false);
     const [isAdmin] = useAdmin();
-    const [ announcements, isPending, isError, error, refetch ] = useAnnouncement();
+    const [announcements, isPending, isError, error, refetch] = useAnnouncement();
 
     const { user, logOut } = useAuth();
 
@@ -22,21 +22,21 @@ const Navbar = () => {
     // logOutHandler
     const logOutHandler = () => {
         logOut()
-        .then(() => {
-            console.log('Logout user successfully');
-            setToggleLinks(false);
-        })
-        .catch(err => {
-            console.error(err);
-        })
+            .then(() => {
+                console.log('Logout user successfully');
+                setToggleLinks(false);
+            })
+            .catch(err => {
+                console.error(err);
+            })
     }
 
     return (
         <header className="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-4 dark:bg-neutral-800 container mx-auto px-6 sticky top-0 z-50">
             <nav className="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
                 <Link className="sm:order-1 flex items-center text-xl font-semibold dark:text-white focus:outline-none focus:opacity-80" to="/">
-                <img src={logo} alt="" className='w-[22px] h-[22px] me-1' />
-                EchoBoard</Link>
+                    <img src={logo} alt="" className='w-[22px] h-[22px] me-1' />
+                    EchoBoard</Link>
 
                 <div className="sm:order-3 flex items-center gap-x-2">
                     <Link to='/all-announcements'>
@@ -88,50 +88,50 @@ const Navbar = () => {
                     </button>
 
                     {
-                        user?.photoURL ? 
-                        <div className='relative'>
-                            <img src={user?.photoURL} alt="" className='w-[30px] h-[30px] rounded-full border-2' onClick={() => setToggleLinks(!toggleLinks)} />
-                            {
-                                toggleLinks ? 
-                                <div className="absolute top-10 right-0 p-2 rounded-lg w-52 border bg-white z-50">
-                                    <p className="text-xs text-gray-600 p-2 border rounded-md bg-blue-100 cursor-not-allowed mb-1">{user?.displayName}</p>
-                                    {
-                                        isAdmin ?
-                                        <Link to='/dashboard/admin-profile'>
-                                            <p className="text-xs text-gray-600 p-2 rounded-md hover:bg-gray-100 mb-1">Dashboard</p>
-                                        </Link> :
-                                        <Link to='/dashboard/my-profile'>
-                                            <p className="text-xs text-gray-600 p-2 rounded-md hover:bg-gray-100 mb-1">Dashboard</p>
-                                        </Link>
-                                    }
-                                    <p className="text-xs text-gray-600 p-2 rounded-md cursor-pointer hover:bg-gray-100 mb-1" onClick={logOutHandler}>Sign Out</p>
-                                </div> : ''
-                            }
-                        </div> :
-                        user?.displayName ? 
-                        <div className='relative'>
-                            <p className='uppercase font-medium w-[30px] h-[30px] rounded-full bg-purple-300 hover:bg-purple-400 active:bg-purple-300 border cursor-pointer flex items-center justify-center' onClick={() => setToggleLinks(!toggleLinks)}>{user?.displayName?.charAt(0)}</p>
+                        user?.photoURL ?
+                            <div className='relative'>
+                                <img src={user?.photoURL} alt="" className='w-[30px] h-[30px] rounded-full border-2' onClick={() => setToggleLinks(!toggleLinks)} />
+                                {
+                                    toggleLinks ?
+                                        <div className="absolute top-10 right-0 p-2 rounded-lg w-52 border bg-white z-50">
+                                            <p className="text-xs text-gray-600 p-2 border rounded-md bg-blue-100 cursor-not-allowed mb-1">{user?.displayName}</p>
+                                            {
+                                                isAdmin ?
+                                                    <Link to='/dashboard/admin-profile'>
+                                                        <p className="text-xs text-gray-600 p-2 rounded-md hover:bg-gray-100 mb-1">Dashboard</p>
+                                                    </Link> :
+                                                    <Link to='/dashboard/my-profile'>
+                                                        <p className="text-xs text-gray-600 p-2 rounded-md hover:bg-gray-100 mb-1">Dashboard</p>
+                                                    </Link>
+                                            }
+                                            <p className="text-xs text-gray-600 p-2 rounded-md cursor-pointer hover:bg-gray-100 mb-1" onClick={logOutHandler}>Sign Out</p>
+                                        </div> : ''
+                                }
+                            </div> :
+                            user?.displayName ?
+                                <div className='relative'>
+                                    <p className='uppercase font-medium w-[30px] h-[30px] rounded-full bg-purple-300 hover:bg-purple-400 active:bg-purple-300 border cursor-pointer flex items-center justify-center' onClick={() => setToggleLinks(!toggleLinks)}>{user?.displayName?.charAt(0)}</p>
 
-                            {
-                                toggleLinks ? 
-                                <div className="absolute top-10 right-0 p-2 rounded-lg w-52 border bg-white z-50">
-                                    <p className="text-xs text-gray-600 p-2 border rounded-md bg-blue-100 cursor-not-allowed mb-1">{user?.displayName}</p>
                                     {
-                                        isAdmin ?
-                                        <Link to='/dashboard/admin-profile'>
-                                            <p className="text-xs text-gray-600 p-2 rounded-md hover:bg-gray-100 mb-1">Dashboard</p>
-                                        </Link> :
-                                        <Link to='/dashboard/my-profile'>
-                                            <p className="text-xs text-gray-600 p-2 rounded-md hover:bg-gray-100 mb-1">Dashboard</p>
-                                        </Link>
+                                        toggleLinks ?
+                                            <div className="absolute top-10 right-0 p-2 rounded-lg w-52 border bg-white z-50">
+                                                <p className="text-xs text-gray-600 p-2 border rounded-md bg-blue-100 cursor-not-allowed mb-1">{user?.displayName}</p>
+                                                {
+                                                    isAdmin ?
+                                                        <Link to='/dashboard/admin-profile'>
+                                                            <p className="text-xs text-gray-600 p-2 rounded-md hover:bg-gray-100 mb-1">Dashboard</p>
+                                                        </Link> :
+                                                        <Link to='/dashboard/my-profile'>
+                                                            <p className="text-xs text-gray-600 p-2 rounded-md hover:bg-gray-100 mb-1">Dashboard</p>
+                                                        </Link>
+                                                }
+                                                <p className="text-xs text-gray-600 p-2 rounded-md cursor-pointer hover:bg-gray-100 mb-1" onClick={logOutHandler}>Sign Out</p>
+                                            </div> : ''
                                     }
-                                    <p className="text-xs text-gray-600 p-2 rounded-md cursor-pointer hover:bg-gray-100 mb-1" onClick={logOutHandler}>Sign Out</p>
-                                </div> : ''
-                            }
-                        </div> :
-                        <Link to='/sign-in'>
-                            <button type="button" className="py-1.5 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Join US</button>
-                        </Link>
+                                </div> :
+                                <Link to='/sign-in'>
+                                    <button type="button" className="py-1.5 px-3 inline-flex items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 active:bg-blue-100 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">Join US</button>
+                                </Link>
                     }
                 </div>
 
@@ -146,13 +146,18 @@ const Navbar = () => {
                                 ? "font-medium text-blue-500 focus:outline-none"
                                 : "font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
                         } to="/">Home</NavLink>
+
+                        <a href='#tags' className="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500">Tags</a>
+                        
+                        <a href='#posts' className="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500">Posts</a>
+
                         {
                             user ?
-                            <NavLink className={({ isActive }) =>
-                            isActive
-                                ? "font-medium text-blue-500 focus:outline-none"
-                                : "font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
-                            } to="/membership">Membership</NavLink> : undefined
+                                <NavLink className={({ isActive }) =>
+                                    isActive
+                                        ? "font-medium text-blue-500 focus:outline-none"
+                                        : "font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
+                                } to="/membership">Membership</NavLink> : undefined
                         }
                     </div>
                 </div>

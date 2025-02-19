@@ -14,7 +14,7 @@ const Tags = () => {
     }
 
     return (
-        <section className='tags container mx-auto px-6 py-14'>
+        <section className='tags container mx-auto px-6 py-14' id="tags">
             <SectionTitle title="Popular Tags" sub_title="Explore Topics of Interest and Join the Conversation" />
 
             <div className="">

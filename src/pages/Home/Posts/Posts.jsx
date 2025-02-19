@@ -24,7 +24,7 @@ const Posts = () => {
 
 
     return (
-        <section className='posts container mx-auto px-6 py-14'>
+        <section className='posts container mx-auto px-6 py-14' id="posts">
             <SectionTitle title="Latest Discussions" sub_title="Explore trending topics and join the conversation!" />
 
             {/* sort buttons div starts */}
