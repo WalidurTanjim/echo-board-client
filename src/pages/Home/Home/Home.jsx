@@ -7,6 +7,7 @@ import useAnnouncement from '../../../hooks/useAnnouncement';
 import JoinUs from '../JoinUs/JoinUs';
 import Accordian from '../Accordian/Accordian';
 import Features from '../Features/Features';
+import UserFeedback from '../UserFeedback/UserFeedback';
 
 const Home = () => {
     const [ announcements, isPending, isError, error, refetch ] = useAnnouncement();
@@ -20,8 +21,9 @@ const Home = () => {
             <Tags />
             { announcements.length > 0 ? <Announcements /> : undefined }
             <Posts />
-            <JoinUs />
             <Accordian />
+            <UserFeedback />
+            <JoinUs />
         </section>
     );
 };

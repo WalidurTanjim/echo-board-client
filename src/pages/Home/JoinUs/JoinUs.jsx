@@ -3,7 +3,7 @@ import React from 'react';
 const JoinUs = () => {
     return (
         // <section className='join-us container mx-auto px-6 py-14'>
-            <section className="bg-gray-100 dark:bg-gray-900">
+            <section className="bg-gray-50 dark:bg-gray-900">
                 <div className="container px-6 py-14 mx-auto lg:flex lg:items-center lg:justify-between">
                     <h2 className="text-2xl font-semibold tracking-tight text-gray-800 xl:text-3xl dark:text-white">
                         Join us and get the update from anywhere
