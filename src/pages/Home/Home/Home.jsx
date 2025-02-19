@@ -5,6 +5,7 @@ import Posts from '../Posts/Posts';
 import Announcements from '../Announcements/Announcements';
 import useAnnouncement from '../../../hooks/useAnnouncement';
 import JoinUs from '../JoinUs/JoinUs';
+import Accordian from '../Accordian/Accordian';
 
 const Home = () => {
     const [ announcements, isPending, isError, error, refetch ] = useAnnouncement();
@@ -18,6 +19,7 @@ const Home = () => {
             { announcements.length > 0 ? <Announcements /> : undefined }
             <Posts />
             <JoinUs />
+            <Accordian />
         </section>
     );
 };
