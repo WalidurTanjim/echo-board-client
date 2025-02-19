@@ -6,6 +6,7 @@ import Announcements from '../Announcements/Announcements';
 import useAnnouncement from '../../../hooks/useAnnouncement';
 import JoinUs from '../JoinUs/JoinUs';
 import Accordian from '../Accordian/Accordian';
+import Features from '../Features/Features';
 
 const Home = () => {
     const [ announcements, isPending, isError, error, refetch ] = useAnnouncement();
@@ -15,6 +16,7 @@ const Home = () => {
             <div className='py-10 bg-gradient-to-r from-[#fafcff] to-[#edf2fc]'>
                 <Banner />
             </div>
+            <Features />
             <Tags />
             { announcements.length > 0 ? <Announcements /> : undefined }
             <Posts />
