@@ -4,6 +4,7 @@ import Tags from '../Tags/Tags';
 import Posts from '../Posts/Posts';
 import Announcements from '../Announcements/Announcements';
 import useAnnouncement from '../../../hooks/useAnnouncement';
+import JoinUs from '../JoinUs/JoinUs';
 
 const Home = () => {
     const [ announcements, isPending, isError, error, refetch ] = useAnnouncement();
@@ -16,6 +17,7 @@ const Home = () => {
             <Tags />
             { announcements.length > 0 ? <Announcements /> : undefined }
             <Posts />
+            <JoinUs />
         </section>
     );
 };
